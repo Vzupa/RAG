@@ -6,7 +6,7 @@ from typing import Dict, List, Optional
 from dotenv import load_dotenv
 from langchain_core.documents import Document
 from langchain_community.document_loaders import CSVLoader, PyPDFLoader
-from langchain_community.vectorstores import Chroma
+from langchain_chroma import Chroma
 from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from pptx import Presentation
@@ -213,7 +213,6 @@ def add_file_to_rag(file_path: str, source_name: Optional[str] = None) -> Dict[s
             persist_directory=str(VECTOR_DIR),
         )
 
-    vector_store.persist()
     total = vector_store._collection.count() if hasattr(vector_store, "_collection") else -1
 
     return {"chunks_added": len(chunks), "collection_size": total}
@@ -226,6 +225,7 @@ def rag_query(
     temperature: Optional[float] = None,
     multiquery: Optional[bool] = None,
     hyde: Optional[bool] = None,
+    mmr: Optional[bool] = None,
 ):
     # Runs a retrieval-augmented query using the persisted Chroma store.
     _require_openai_key()
@@ -244,8 +244,10 @@ def rag_query(
         search_kwargs["score_threshold"] = CONFIG["RAG_SCORE_THRESHOLD"]
     if CONFIG.get("RAG_FILTER_METADATA"):
         search_kwargs["filter"] = CONFIG["RAG_FILTER_METADATA"]
+
+    search_type = "mmr" if mmr else CONFIG["RAG_SEARCH_TYPE"]
     retriever = vector_store.as_retriever(
-        search_type=CONFIG["RAG_SEARCH_TYPE"],
+        search_type=search_type,
         search_kwargs=search_kwargs,
     )
 
@@ -322,3 +324,56 @@ def llm_only(
     )
     response = llm.invoke(question)
     return response.content if hasattr(response, "content") else response
+
+
+def get_vector_store_stats() -> Dict[str, int]:
+    # Returns statistics about the vector store.
+    if not VECTOR_DIR.exists():
+        return {"documents_loaded": 0}
+
+    embedding = OpenAIEmbeddings(model=CONFIG["EMBEDDING_MODEL"])
+    vector_store = Chroma(persist_directory=str(VECTOR_DIR), embedding_function=embedding)
+    return {"documents_loaded": vector_store._collection.count()}
+
+
+def list_source_files() -> List[str]:
+    # Returns a list of unique source files in the vector store.
+    if not VECTOR_DIR.exists():
+        return []
+
+    embedding = OpenAIEmbeddings(model=CONFIG["EMBEDDING_MODEL"])
+    vector_store = Chroma(persist_directory=str(VECTOR_DIR), embedding_function=embedding)
+    
+    # Chroma's get() retrieves all documents and their metadata
+    all_docs = vector_store.get(include=["metadatas"])
+    
+    # Extract unique source filenames from metadata
+    sources = set()
+    for metadata in all_docs.get("metadatas", []):
+        if "source" in metadata:
+            sources.add(metadata["source"])
+            
+    return sorted(list(sources))
+
+
+def delete_source_file(filename: str) -> Dict[str, int]:
+    # Deletes all chunks associated with a specific source file.
+    if not VECTOR_DIR.exists():
+        raise ValueError("Vector store not found.")
+
+    embedding = OpenAIEmbeddings(model=CONFIG["EMBEDDING_MODEL"])
+    vector_store = Chroma(persist_directory=str(VECTOR_DIR), embedding_function=embedding)
+
+    # Find the IDs of all chunks with the given source filename to count them
+    # and to ensure the file exists in the store.
+    results = vector_store.get(where={"source": filename}, include=["metadatas"])
+    ids_to_delete = results.get("ids", [])
+
+    if not ids_to_delete:
+        raise ValueError(f"File '{filename}' not found in vector store.")
+
+    # Perform the deletion directly using a 'where' clause on the collection.
+    # This is more atomic and reliable than deleting by IDs.
+    vector_store._collection.delete(where={"source": filename})
+    
+    return {"chunks_deleted": len(ids_to_delete)}

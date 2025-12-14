@@ -16,14 +16,11 @@ app = FastAPI(title="RAG Pipeline API", version="0.1.0")
 
 class QueryRequest(BaseModel):
     question: str
-    k: Optional[int] = None
-    model: Optional[str] = None
-    temperature: Optional[float] = None
 
 
 @app.post("/ingest")
 async def ingest(file: UploadFile = File(...)):
-    # Upload a PDF/CSV/PPTX, store it under Data/, and update the vector store.
+    # Upload a PDF/CSV/PPTX, process it, and update the vector store.
     suffix = Path(file.filename).suffix.lower()
     if suffix not in ALLOWED_SUFFIXES:
         raise HTTPException(status_code=400, detail=f"Unsupported file type: {suffix}")
@@ -34,7 +31,7 @@ async def ingest(file: UploadFile = File(...)):
             tmp_path = tmp.name
             tmp.write(await file.read())
 
-        stats = add_file_to_rag(tmp_path)
+        stats = add_file_to_rag(tmp_path, source_name=file.filename)
         return {"message": "ingested", "stats": stats}
     except Exception as exc:
         raise HTTPException(status_code=400, detail=str(exc))
@@ -60,9 +57,7 @@ def llm(req: QueryRequest):
     # Run a base LLM-only query (no retrieval).
     try:
         answer = llm_only(
-            question=req.question,
-            model=req.model,
-            temperature=req.temperature,
+            question=req.question
         )
         return {"answer": answer}
     except Exception as exc:

@@ -1,6 +1,5 @@
 import json
 import os
-import shutil
 from pathlib import Path
 from typing import Dict, List, Optional
 
@@ -22,17 +21,13 @@ if not CONFIG_PATH.exists():
 with open(CONFIG_PATH, "r", encoding="utf-8") as f:
     CONFIG = json.load(f)
 
-# Folder layout for stored files and vector store
+# Vector store location and supported file types
 DATA_DIR = Path("Data")
 VECTOR_DIR = DATA_DIR / "vector_store"
-SUBFOLDERS = {"pdf": "PDF", "pptx": "PPTX", "csv": "CSV"}
+SUPPORTED_EXTS = {"pdf", "pptx", "csv"}
 
-# Ensure directories exist
+# Ensure vector store directory exists
 def _ensure_dirs():
-    # Create base data folders and vector store folder if missing
-    DATA_DIR.mkdir(parents=True, exist_ok=True)
-    for folder in SUBFOLDERS.values():
-        (DATA_DIR / folder).mkdir(parents=True, exist_ok=True)
     VECTOR_DIR.mkdir(parents=True, exist_ok=True)
 
 # Require OpenAI API key
@@ -154,8 +149,8 @@ def _dedup_docs(docs: List[Document], max_docs: int) -> List[Document]:
     return unique
 
 
-def add_file_to_rag(file_path: str) -> Dict[str, int]:
-    # Copies the file into Data/<TYPE>/, chunks it, embeds with OpenAI, and updates the Chroma store.
+def add_file_to_rag(file_path: str, source_name: Optional[str] = None) -> Dict[str, int]:
+    # Reads the file (PDF/CSV/PPTX), chunks it, embeds with OpenAI, and updates the Chroma store.
     _ensure_dirs()
     _require_openai_key()
 
@@ -165,15 +160,14 @@ def add_file_to_rag(file_path: str) -> Dict[str, int]:
         raise FileNotFoundError(f"File not found: {file_path}")
 
     ext = path_obj.suffix.lower().lstrip(".")
-    if ext not in SUBFOLDERS:
+    if ext not in SUPPORTED_EXTS:
         print("Error: unsupported file type.")
-        raise ValueError(f"Unsupported file type: {ext}. Supported: {', '.join(SUBFOLDERS)}")
+        raise ValueError(f"Unsupported file type: {ext}. Supported: {', '.join(SUPPORTED_EXTS)}")
 
-    dest_dir = DATA_DIR / SUBFOLDERS[ext]
-    dest_path = dest_dir / path_obj.name
-    shutil.copy2(path_obj, dest_path)
-
-    documents = _load_file_as_documents(dest_path)
+    documents = _load_file_as_documents(path_obj)
+    if source_name:
+        for d in documents:
+            d.metadata["source"] = source_name
     chunks = _split_documents(documents)
 
     embedding = OpenAIEmbeddings(model=CONFIG["EMBEDDING_MODEL"])
@@ -231,10 +225,14 @@ def rag_query(
         queries = [question]
 
     all_docs: List[Document] = []
+    hyde_details = []
     for q in queries:
         query_text = q
         if CONFIG.get("HYDE_ENABLED"):
             query_text = _generate_hyde_text(q, llm)
+            hyde_details.append({"original": q, "hyde": query_text})
+        else:
+            hyde_details.append({"original": q, "hyde": None})
         docs = retriever.invoke(query_text)
         all_docs.extend(docs)
 
@@ -255,7 +253,12 @@ def rag_query(
         for doc in context_docs
     ]
     answer_text = response.content if hasattr(response, "content") else str(response)
-    return {"answer": answer_text, "sources": sources}
+    return {
+        "answer": answer_text,
+        "sources": sources,
+        "queries": queries,
+        "hyde": hyde_details,
+    }
 
 
 def llm_only(

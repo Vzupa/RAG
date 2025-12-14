@@ -149,6 +149,36 @@ def _dedup_docs(docs: List[Document], max_docs: int) -> List[Document]:
     return unique
 
 
+def _normalize_source_meta(doc: Document):
+    # Normalize source name to filename and page/slide/row to human-friendly numbers
+    raw_source = doc.metadata.get("source")
+    source_name = Path(raw_source).name if raw_source else None
+
+    page_val = doc.metadata.get("page")
+    slide_val = doc.metadata.get("slide")
+    row_val = doc.metadata.get("row")
+    page_or_loc = page_val if page_val is not None else slide_val if slide_val is not None else row_val
+
+    # If page is numeric, convert to int and +1 to show human page numbers (PyPDFLoader is 0-based)
+    display_loc = page_or_loc
+    if isinstance(page_or_loc, (int, float)) and page_or_loc >= 0:
+        display_loc = int(page_or_loc) + 1
+    else:
+        # try parsing string digits
+        try:
+            num = int(str(page_or_loc))
+            display_loc = num + 1
+        except Exception:
+            display_loc = page_or_loc
+
+    return {
+        "source": source_name,
+        "page": display_loc if page_val is not None else None,
+        "type": doc.metadata.get("type"),
+        "location": display_loc,
+    }
+
+
 def add_file_to_rag(file_path: str, source_name: Optional[str] = None) -> Dict[str, int]:
     # Reads the file (PDF/CSV/PPTX), chunks it, embeds with OpenAI, and updates the Chroma store.
     _ensure_dirs()
@@ -165,9 +195,10 @@ def add_file_to_rag(file_path: str, source_name: Optional[str] = None) -> Dict[s
         raise ValueError(f"Unsupported file type: {ext}. Supported: {', '.join(SUPPORTED_EXTS)}")
 
     documents = _load_file_as_documents(path_obj)
-    if source_name:
-        for d in documents:
-            d.metadata["source"] = source_name
+    # Tag source as the original filename if provided (or use the incoming path name)
+    src_name = Path(source_name).name if source_name else path_obj.name
+    for d in documents:
+        d.metadata["source"] = src_name
     chunks = _split_documents(documents)
 
     embedding = OpenAIEmbeddings(model=CONFIG["EMBEDDING_MODEL"])
@@ -250,18 +281,22 @@ def rag_query(
     prompt = CONFIG["PROMPT_ANSWER"].format(context=context_text, question=question)
     response = llm.invoke(prompt)
 
-    # Build a deduped source list for the response
+    # Build a deduped source list for the response with normalized page numbers and filenames
     sources = []
     seen_sources = set()
     for doc in context_docs:
-        src = doc.metadata.get("source")
-        page_val = doc.metadata.get("page") or doc.metadata.get("slide") or doc.metadata.get("row")
-        typ = doc.metadata.get("type")
-        key = (src, page_val, typ)
+        normalized = _normalize_source_meta(doc)
+        key = (normalized["source"], normalized["page"], normalized.get("type"))
         if key in seen_sources:
             continue
         seen_sources.add(key)
-        sources.append({"source": src, "page": page_val, "type": typ})
+        sources.append(
+            {
+                "source": normalized["source"],
+                "page": normalized["page"],
+                "type": normalized.get("type"),
+            }
+        )
     answer_text = response.content if hasattr(response, "content") else str(response)
     result = {
         "answer": answer_text,

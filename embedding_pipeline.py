@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 
 from langchain_community.document_loaders import PyPDFLoader, WebBaseLoader, TextLoader
 # Text Splitters
-from langchain_text_splitters import RecursiveCharacterTextSplitter
+from langchain.text_splitter import RecursiveCharacterTextSplitter
 # Embeddings
 from langchain_openai import OpenAIEmbeddings
 from langchain_community.embeddings import HuggingFaceEmbeddings

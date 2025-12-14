@@ -1,0 +1,19 @@
+{
+  "LLM_MODEL": "gpt-4o-mini",
+  "LLM_TEMPERATURE": 0.0,
+  "EMBEDDING_MODEL": "text-embedding-3-small",
+  "RAG_SEARCH_TYPE": "similarity",
+  "RAG_SEARCH_K": 4,
+  "RAG_FETCH_K": 0,
+  "RAG_SCORE_THRESHOLD": null,
+  "RAG_FILTER_METADATA": null,
+  "CHUNK_SIZE": 1000,
+  "CHUNK_OVERLAP": 200,
+  "MULTIQUERY_ENABLED": true,
+  "MULTIQUERY_VARIANTS": 2,
+  "HYDE_ENABLED": true,
+  "MAX_CONTEXT_DOCS": 8,
+  "PROMPT_MULTIQUERY": "Generate concise alternative phrasings of the question for better document retrieval. Return each variant on a new line. Do not number them.\\n\\nQuestion: {question}",
+  "PROMPT_HYDE": "Draft a concise, factual answer to the question based only on general knowledge. This is a hypothetical answer used to find similar documents.\\n\\nQuestion: {question}",
+  "PROMPT_ANSWER": "Use the provided context to answer the question. If you are unsure, say you do not know. Cite sources with (source, page/slide/row) when possible.\\n\\nContext:\\n{context}\\n\\nQuestion: {question}\\n\\nAnswer:"
+}

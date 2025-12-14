@@ -16,6 +16,8 @@ app = FastAPI(title="RAG Pipeline API", version="0.1.0")
 
 class QueryRequest(BaseModel):
     question: str
+    multiquery: Optional[bool] = None
+    hyde: Optional[bool] = None
 
 
 @app.post("/ingest")
@@ -45,7 +47,9 @@ def rag(req: QueryRequest):
     # Run a retrieval-augmented query.
     try:
         result = rag_query(
-            question=req.question
+            question=req.question,
+            multiquery=req.multiquery,
+            hyde=req.hyde,
         )
         return result
     except Exception as exc:
@@ -56,9 +60,7 @@ def rag(req: QueryRequest):
 def llm(req: QueryRequest):
     # Run a base LLM-only query (no retrieval).
     try:
-        answer = llm_only(
-            question=req.question
-        )
+        answer = llm_only(question=req.question)
         return {"answer": answer}
     except Exception as exc:
         raise HTTPException(status_code=400, detail=str(exc))

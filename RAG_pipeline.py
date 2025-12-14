@@ -193,6 +193,8 @@ def rag_query(
     k: Optional[int] = None,
     model: Optional[str] = None,
     temperature: Optional[float] = None,
+    multiquery: Optional[bool] = None,
+    hyde: Optional[bool] = None,
 ):
     # Runs a retrieval-augmented query using the persisted Chroma store.
     _require_openai_key()
@@ -218,8 +220,12 @@ def rag_query(
 
     llm = _build_llm(model_override=model, temperature_override=temperature)
 
+    # Determine feature flags (request overrides config)
+    use_multiquery = CONFIG.get("MULTIQUERY_ENABLED") if multiquery is None else multiquery
+    use_hyde = CONFIG.get("HYDE_ENABLED") if hyde is None else hyde
+
     # Build query variants (multi-query) if enabled
-    if CONFIG.get("MULTIQUERY_ENABLED"):
+    if use_multiquery:
         queries = _generate_multi_queries(question, llm)
     else:
         queries = [question]
@@ -228,7 +234,7 @@ def rag_query(
     hyde_details = []
     for q in queries:
         query_text = q
-        if CONFIG.get("HYDE_ENABLED"):
+        if use_hyde:
             query_text = _generate_hyde_text(q, llm)
             hyde_details.append({"original": q, "hyde": query_text})
         else:
@@ -244,21 +250,28 @@ def rag_query(
     prompt = CONFIG["PROMPT_ANSWER"].format(context=context_text, question=question)
     response = llm.invoke(prompt)
 
-    sources = [
-        {
-            "source": doc.metadata.get("source"),
-            "page": doc.metadata.get("page") or doc.metadata.get("slide") or doc.metadata.get("row"),
-            "type": doc.metadata.get("type"),
-        }
-        for doc in context_docs
-    ]
+    # Build a deduped source list for the response
+    sources = []
+    seen_sources = set()
+    for doc in context_docs:
+        src = doc.metadata.get("source")
+        page_val = doc.metadata.get("page") or doc.metadata.get("slide") or doc.metadata.get("row")
+        typ = doc.metadata.get("type")
+        key = (src, page_val, typ)
+        if key in seen_sources:
+            continue
+        seen_sources.add(key)
+        sources.append({"source": src, "page": page_val, "type": typ})
     answer_text = response.content if hasattr(response, "content") else str(response)
-    return {
+    result = {
         "answer": answer_text,
         "sources": sources,
-        "queries": queries,
-        "hyde": hyde_details,
     }
+    if use_multiquery:
+        result["queries"] = queries
+    if use_hyde:
+        result["hyde"] = hyde_details
+    return result
 
 
 def llm_only(

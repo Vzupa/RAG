@@ -343,16 +343,16 @@ def list_source_files() -> List[str]:
 
     embedding = OpenAIEmbeddings(model=CONFIG["EMBEDDING_MODEL"])
     vector_store = Chroma(persist_directory=str(VECTOR_DIR), embedding_function=embedding)
-    
+
     # Chroma's get() retrieves all documents and their metadata
     all_docs = vector_store.get(include=["metadatas"])
-    
+
     # Extract unique source filenames from metadata
     sources = set()
     for metadata in all_docs.get("metadatas", []):
         if "source" in metadata:
             sources.add(metadata["source"])
-            
+
     return sorted(list(sources))
 
 
@@ -375,5 +375,5 @@ def delete_source_file(filename: str) -> Dict[str, int]:
     # Perform the deletion directly using a 'where' clause on the collection.
     # This is more atomic and reliable than deleting by IDs.
     vector_store._collection.delete(where={"source": filename})
-    
+
     return {"chunks_deleted": len(ids_to_delete)}

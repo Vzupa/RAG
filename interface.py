@@ -68,8 +68,9 @@ if "active_chat_id" not in st.session_state:
     else:
         new_chat()
 
-if "uploaded_file_names" not in st.session_state:
-    st.session_state.uploaded_file_names = set()
+# 🔑 uploader reset key (CORE FIX)
+if "uploader_key" not in st.session_state:
+    st.session_state.uploader_key = str(uuid.uuid4())
 
 # =========================
 # Sidebar
@@ -104,45 +105,61 @@ with st.sidebar:
 
     st.divider()
 
+    # =========================
+    # Retrieval Settings
+    # =========================
     st.header("⚙️ Retrieval Settings")
 
     use_rag = st.toggle("Use RAG", value=True)
-
     top_k = st.slider("Top-K", 1, 10, 3, disabled=not use_rag)
     multiquery = st.checkbox("Multi-Query", value=False, disabled=not use_rag)
     hyde = st.checkbox("HyDE", value=False, disabled=not use_rag)
 
     st.divider()
 
+    # =========================
+    # Upload Documents
+    # =========================
     st.header("📄 Upload Documents")
 
     uploaded_files = st.file_uploader(
-        "PDF / CSV / PPTX",
-        type=["pdf", "csv", "pptx"],
+        "Documents / Images / Audio / Video",
+        type=[
+            "pdf", "csv", "pptx",
+            "jpg", "jpeg", "png",
+            "mp4", "mov", "avi", "mp3"
+        ],
         accept_multiple_files=True,
+        key=st.session_state.uploader_key,
     )
 
     if uploaded_files:
         files_to_upload = [
             ("files", (f.name, f.getvalue()))
             for f in uploaded_files
-            if f.name not in st.session_state.uploaded_file_names
         ]
 
-        if files_to_upload:
-            with st.spinner("Uploading & indexing…"):
-                r = requests.post(f"{API_BASE}/upload", files=files_to_upload, timeout=300)
+        with st.spinner("Uploading & indexing…"):
+            r = requests.post(
+                f"{API_BASE}/upload",
+                files=files_to_upload,
+                timeout=300,
+            )
 
-            if r.status_code == 200:
-                st.success("Documents indexed")
-                for _, (name, _) in files_to_upload:
-                    st.session_state.uploaded_file_names.add(name)
-            else:
-                st.error(r.text)
+        if r.status_code == 200:
+            st.success("Documents indexed")
+        else:
+            st.error(r.text)
 
-            st.rerun()
+        # reset uploader after successful upload
+        st.session_state.uploader_key = str(uuid.uuid4())
+        st.rerun()
 
     st.divider()
+
+    # =========================
+    # Indexed Documents
+    # =========================
     st.header("🗂️ Indexed Documents")
 
     try:
@@ -152,7 +169,10 @@ with st.sidebar:
             c1.write(d)
             if c2.button("🗑️", key=f"doc_{d}"):
                 requests.delete(f"{API_BASE}/documents/{d}", timeout=10)
-                st.session_state.uploaded_file_names.discard(d)
+
+                # 🔑 reset uploader so deleted file isn't reuploaded
+                st.session_state.uploader_key = str(uuid.uuid4())
+
                 st.rerun()
     except Exception:
         st.caption("Backend unavailable")

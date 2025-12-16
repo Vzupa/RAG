@@ -109,7 +109,6 @@ with st.sidebar:
     use_rag = st.toggle("Use RAG", value=True)
 
     top_k = st.slider("Top-K", 1, 10, 3, disabled=not use_rag)
-    mmr = st.checkbox("MMR (diversity)", value=True, disabled=not use_rag)
     multiquery = st.checkbox("Multi-Query", value=False, disabled=not use_rag)
     hyde = st.checkbox("HyDE", value=False, disabled=not use_rag)
 
@@ -118,8 +117,8 @@ with st.sidebar:
     st.header("📄 Upload Documents")
 
     uploaded_files = st.file_uploader(
-        "PDF / CSV / PPTX / JGP / JPEG / PNG / MP4 / MOV / AVI / MP3",
-        type=["pdf", "csv", "pptx", "jpg", "jpeg", "png", "mp4", "mov", "avi", "mp3"],
+        "PDF / CSV / PPTX",
+        type=["pdf", "csv", "pptx"],
         accept_multiple_files=True,
     )
 
@@ -197,7 +196,7 @@ if question and question.strip():
     payload = {
         "question": question,
         "top_k": top_k,
-        "mmr": mmr,
+        "mmr": True,  # always enabled internally
         "multiquery": multiquery,
         "hyde": hyde,
     }

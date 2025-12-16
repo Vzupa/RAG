@@ -196,7 +196,6 @@ if question and question.strip():
     payload = {
         "question": question,
         "top_k": top_k,
-        "mmr": True,  # always enabled internally
         "multiquery": multiquery,
         "hyde": hyde,
     }

@@ -32,7 +32,7 @@ uvicorn fastapi_app:app --reload
 
 ## Run Streamlit Frontend
 ```bash
-streamlit run app.py
+streamlit run interface.py
 ```
 
 ## Endpoints

@@ -211,19 +211,16 @@ __marimo__/
 
 
 .dist
-<<<<<<< HEAD
 
 
 
 experiment_pipeline.py
-=======
 \n# Project Specific\nData/vector_store/\nchat_history.json\nuv.lock
 \napp.py\nchat_history.json\n.python-version\npyproject.toml\nuv.lock
 
 
-/Data/*
+/Data/vector_store
 /documentation/*
 /Data/vector_store/
 chat_history.json
 /documentation
->>>>>>> 6b4d8fa13966d01d73fbcd150f14a5fcc456c7d3

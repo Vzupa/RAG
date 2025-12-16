@@ -1,15 +1,26 @@
 import json
 import os
+import base64     
+import tempfile
 from pathlib import Path
 from typing import Dict, List, Optional
 
 from dotenv import load_dotenv
 from langchain_core.documents import Document
+from langchain_core.messages import HumanMessage
 from langchain_community.document_loaders import CSVLoader, PyPDFLoader
-from langchain_chroma import Chroma
+from langchain_community.vectorstores import Chroma
 from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from pptx import Presentation
+from openai import OpenAI
+
+try:
+    from moviepy import VideoFileClip
+    HAS_MOVIEPY = True
+except ImportError:
+    HAS_MOVIEPY = False
+    print("Warning: 'moviepy' not found. Video processing will fail unless installed.")
 
 # Load environment variables (.env for OPENAI_API_KEY)
 load_dotenv()
@@ -24,8 +35,11 @@ with open(CONFIG_PATH, "r", encoding="utf-8") as f:
 # Vector store location and supported file types
 DATA_DIR = Path("Data")
 VECTOR_DIR = DATA_DIR / "vector_store"
-SUPPORTED_EXTS = {"pdf", "pptx", "csv"}
-
+SUPPORTED_EXTS = {
+    "pdf", "pptx", "csv", 
+    "jpg", "jpeg", "png",       # Images
+    "mp4", "mov", "avi", "mp3"  # Video/Audio
+}
 # Ensure vector store directory exists
 def _ensure_dirs():
     VECTOR_DIR.mkdir(parents=True, exist_ok=True)
@@ -38,6 +52,84 @@ def _require_openai_key():
         print("Error: OPENAI_API_KEY is missing. Add it to your environment or .env file.")
         raise ValueError("OPENAI_API_KEY not set")
 
+def _image_to_documents(file_path: Path) -> List[Document]:
+    """Encodes image to base64 and uses GPT-4o to describe it."""
+    try:
+        with open(file_path, "rb") as image_file:
+            encoded_string = base64.b64encode(image_file.read()).decode("utf-8")
+        
+        # We use a vision-capable model explicitly here
+        vision_llm = ChatOpenAI(model="gpt-4o", temperature=0, max_tokens=1000)
+        
+        msg = HumanMessage(content=[
+            {"type": "text", "text": "Describe this image in detail for a retrieval database. Include any visible text, charts, or key visual elements."},
+            {"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{encoded_string}"}}
+        ])
+        
+        response = vision_llm.invoke([msg])
+        description = response.content
+        
+        return [Document(
+            page_content=f"[Image Description of {file_path.name}]:\n{description}",
+            metadata={
+                "source": str(file_path),
+                "type": "image"
+            }
+        )]
+    except Exception as e:
+        print(f"Error processing image {file_path}: {e}")
+        return []
+    
+
+def _video_to_documents(file_path: Path) -> List[Document]:
+    """Extracts audio from video and transcribes it using OpenAI Whisper."""
+    if not HAS_MOVIEPY:
+        raise ImportError("moviepy is required for video processing. Run `pip install moviepy`.")
+
+    try:
+        # 1. Extract audio to a temporary file
+        with tempfile.NamedTemporaryFile(suffix=".mp3", delete=False) as temp_audio:
+            temp_audio_path = temp_audio.name
+        
+        # If it's already audio, just copy path; if video, extract audio
+        if file_path.suffix.lower() in ['.mp3', '.wav']:
+            temp_audio_path = str(file_path) # Use original file directly if audio
+            is_temp = False
+        else:
+            clip = VideoFileClip(str(file_path))
+            clip.audio.write_audiofile(temp_audio_path, logger=None)
+            is_temp = True
+
+        # 2. Transcribe using standard OpenAI client
+        client = OpenAI()
+        with open(temp_audio_path, "rb") as audio_file:
+            transcript = client.audio.transcriptions.create(
+                model="whisper-1", 
+                file=audio_file,
+                prompt="Transcribe this audio clearly."
+            )
+        
+        # Cleanup temp file
+        if is_temp and os.path.exists(temp_audio_path):
+            os.remove(temp_audio_path)
+
+        text_content = transcript.text
+        if not text_content:
+            return []
+
+        return [Document(
+            page_content=f"[Video/Audio Transcript of {file_path.name}]:\n{text_content}",
+            metadata={
+                "source": str(file_path),
+                "type": "video"
+            }
+        )]
+
+    except Exception as e:
+        print(f"Error processing video {file_path}: {e}")
+        if 'temp_audio_path' in locals() and os.path.exists(temp_audio_path) and is_temp:
+            os.remove(temp_audio_path)
+        return []
 
 # Basic PPTX text extraction without unstructured dependency.
 def _pptx_to_documents(file_path: Path) -> List[Document]:
@@ -82,6 +174,15 @@ def _load_file_as_documents(file_path: Path) -> List[Document]:
         return docs
     if ext == ".pptx":
         return _pptx_to_documents(file_path)
+    
+    # Image Handlers
+    if ext in {".jpg", ".jpeg", ".png"}:
+        return _image_to_documents(file_path)
+        
+    # Video/Audio Handlers
+    if ext in {".mp4", ".mov", ".avi", ".mp3"}:
+        return _video_to_documents(file_path)
+    
     raise ValueError(f"Unsupported file type: {ext}")
 
 # Split documents into chunks

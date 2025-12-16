@@ -17,7 +17,7 @@ from RAG_pipeline import (
 )
 
 # Allowed file types for ingestion
-ALLOWED_SUFFIXES = {".pdf", ".csv", ".pptx"}
+ALLOWED_SUFFIXES = {".pdf", ".csv", ".pptx", ".jpg", ".jpeg", ".png", ".mp4", ".mov", ".avi", ".mp3"}
 
 app = FastAPI(title="RAG Pipeline API", version="0.1.0")
 

@@ -13,6 +13,7 @@ FastAPI wrapper around a LangChain-based RAG pipeline with multi-query + HyDE re
    pip install -r requirements.txt
    # Also ensure langchain-chroma is installed for ChromaDB functionality
    # pip install langchain-chroma
+   pip install streamlit requests python-dotenv # For frontend streamlit application
    ```
 3) Add your OpenAI key to `.env`:
    ```
@@ -32,7 +33,7 @@ uvicorn fastapi_app:app --reload
 
 ## Run Streamlit Frontend
 ```bash
-streamlit run app.py
+streamlit run interface.py
 ```
 
 ## Endpoints

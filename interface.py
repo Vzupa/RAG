@@ -118,8 +118,8 @@ with st.sidebar:
     st.header("📄 Upload Documents")
 
     uploaded_files = st.file_uploader(
-        "PDF / CSV / PPTX",
-        type=["pdf", "csv", "pptx"],
+        "PDF / CSV / PPTX / JGP / JPEG / PNG / MP4 / MOV / AVI / MP3",
+        type=["pdf", "csv", "pptx", "jpg", "jpeg", "png", "mp4", "mov", "avi", "mp3"],
         accept_multiple_files=True,
     )
 

@@ -53,12 +53,35 @@ def _require_openai_key():
         raise ValueError("OPENAI_API_KEY not set")
 
 def _image_to_documents(file_path: Path) -> List[Document]:
-    """Encodes image to base64 and uses GPT-4o to describe it."""
+    """
+    Generates a semantic text description of an image file using GPT-4o (Vision).
+
+    This function bridges the gap between visual data and text-based vector stores by 
+    converting the visual content of an image into a detailed natural language description.
+
+    The process involves:
+    1. Reading the image file in binary mode.
+    2. Converting the binary data to a Base64-encoded string to comport with OpenAI API requirements.
+    3. Sending the encoded image to the `gpt-4o` model with a system prompt specifically designed 
+       for retrieval databases (requesting details on visible text, charts, and key elements).
+    4. Encapsulating the resulting description in a LangChain `Document` object.
+
+    Args:
+        file_path (Path): The file system path to the target image (.jpg, .jpeg, .png).
+
+    Returns:
+        List[Document]: A list containing a single Document object where `page_content` is the 
+        model-generated description. Returns an empty list if an error occurs during API invocation 
+        or file processing.
+
+    Metadata:
+        source (str): The absolute string path of the file.
+        type (str): Fixed as "image".
+    """   
     try:
         with open(file_path, "rb") as image_file:
             encoded_string = base64.b64encode(image_file.read()).decode("utf-8")
         
-        # We use a vision-capable model explicitly here
         vision_llm = ChatOpenAI(model="gpt-4o", temperature=0, max_tokens=1000)
         
         msg = HumanMessage(content=[
@@ -82,25 +105,49 @@ def _image_to_documents(file_path: Path) -> List[Document]:
     
 
 def _video_to_documents(file_path: Path) -> List[Document]:
-    """Extracts audio from video and transcribes it using OpenAI Whisper."""
+    """
+    Extracts and transcribes spoken audio from video or audio files using OpenAI Whisper.
+
+    This function handles multimodal ingestion by isolating the audio track from a video file
+     and converting speech to text.
+
+    The process involves:
+    1. Creating a temporary `.mp3` file to store the extracted audio track (if input is video).
+    2. If input is video: extracting audio using `VideoFileClip`.
+    3. If input is audio: using the file directly.
+    4. Sending the audio binary to OpenAI's `whisper-1` model for transcription.
+    5. Cleaning up any temporary files generated during the process.
+
+    Args:
+        file_path (Path): The file system path to the video (.mp4, .mov, .avi) or audio (.mp3) file.
+
+    Returns:
+        List[Document]: A list containing a single Document object where `page_content` is the 
+        full text transcript. Returns an empty list if the transcript is empty or if an error occurs.
+
+    Raises:
+        ImportError: If the `moviepy` library is not installed.
+
+    Metadata:
+        source (str): The absolute string path of the file.
+        type (str): Fixed as "video".
+    """
+
     if not HAS_MOVIEPY:
         raise ImportError("moviepy is required for video processing. Run `pip install moviepy`.")
 
     try:
-        # 1. Extract audio to a temporary file
         with tempfile.NamedTemporaryFile(suffix=".mp3", delete=False) as temp_audio:
             temp_audio_path = temp_audio.name
         
-        # If it's already audio, just copy path; if video, extract audio
         if file_path.suffix.lower() in ['.mp3', '.wav']:
-            temp_audio_path = str(file_path) # Use original file directly if audio
+            temp_audio_path = str(file_path) 
             is_temp = False
         else:
             clip = VideoFileClip(str(file_path))
             clip.audio.write_audiofile(temp_audio_path, logger=None)
             is_temp = True
 
-        # 2. Transcribe using standard OpenAI client
         client = OpenAI()
         with open(temp_audio_path, "rb") as audio_file:
             transcript = client.audio.transcriptions.create(
@@ -109,7 +156,6 @@ def _video_to_documents(file_path: Path) -> List[Document]:
                 prompt="Transcribe this audio clearly."
             )
         
-        # Cleanup temp file
         if is_temp and os.path.exists(temp_audio_path):
             os.remove(temp_audio_path)
 
@@ -131,9 +177,30 @@ def _video_to_documents(file_path: Path) -> List[Document]:
             os.remove(temp_audio_path)
         return []
 
-# Basic PPTX text extraction without unstructured dependency.
 def _pptx_to_documents(file_path: Path) -> List[Document]:
-    # Extract text from PPTX slides and attach metadata
+    """
+    Extracts raw text content from PowerPoint presentations (.pptx) without external service dependencies.
+
+    This function iterates through the internal XML structure of a PowerPoint file to harvest text,
+    maintaining the logical separation of content by creating one Document per slide.
+
+    The process involves:
+    1. Loading the presentation using `python-pptx`.
+    2. Iterating through every slide in the deck.
+    3. Within each slide, iterating through all shapes to find text-containing elements.
+    4. Aggregating text within a slide into a single string.
+
+    Args:
+        file_path (Path): The file system path to the .pptx file.
+
+    Returns:
+        List[Document]: A list of Document objects, where each document represents one slide.
+
+    Metadata:
+        source (str): The absolute string path of the file.
+        slide (int): The 1-based index of the slide.
+        type (str): Fixed as "pptx".
+    """
     prs = Presentation(str(file_path))
     docs: List[Document] = []
     for idx, slide in enumerate(prs.slides, start=1):
@@ -156,9 +223,20 @@ def _pptx_to_documents(file_path: Path) -> List[Document]:
         )
     return docs
 
-# Load file as documents, these can be pdf, csv, or pptx
 def _load_file_as_documents(file_path: Path) -> List[Document]:
-    # Dispatch loader by file extension and tag basic metadata
+    """
+    The central dispatch function that routes files to their appropriate specific loader 
+    based on file extension.
+
+    Args:
+        file_path (Path): The path to the file to be ingested.
+
+    Returns:
+        List[Document]: A list of processed Document objects ready for splitting/chunking.
+
+    Raises:
+        ValueError: If the file extension is not supported by any defined loader.
+    """
     ext = file_path.suffix.lower()
     if ext == ".pdf":
         docs = PyPDFLoader(str(file_path)).load()
@@ -168,26 +246,35 @@ def _load_file_as_documents(file_path: Path) -> List[Document]:
     if ext == ".csv":
         docs = CSVLoader(str(file_path), encoding="utf-8").load()
         for idx, d in enumerate(docs, start=1):
-            # Ensure row number is recorded; CSVLoader may already add row indices.
             d.metadata.setdefault("row", idx)
             d.metadata["type"] = "csv"
         return docs
     if ext == ".pptx":
         return _pptx_to_documents(file_path)
     
-    # Image Handlers
     if ext in {".jpg", ".jpeg", ".png"}:
         return _image_to_documents(file_path)
         
-    # Video/Audio Handlers
     if ext in {".mp4", ".mov", ".avi", ".mp3"}:
         return _video_to_documents(file_path)
     
     raise ValueError(f"Unsupported file type: {ext}")
 
-# Split documents into chunks
 def _split_documents(documents: List[Document]):
-    # Split documents into overlapping chunks for embedding
+    """
+    Splits a list of Documents into smaller, overlapping chunks suitable for vector embedding.
+
+    The process relies on `RecursiveCharacterTextSplitter` and uses global `CONFIG` values for:
+    - `CHUNK_SIZE`: The maximum size of a text block.
+    - `CHUNK_OVERLAP`: The amount of text repeated between adjacent chunks to preserve context.
+
+    Args:
+        documents (List[Document]): The list of raw Document objects returned by the loaders.
+
+    Returns:
+        List[Document]: A new, longer list of Document objects where `page_content` has been 
+        chunked to fit within specified size limits.
+    """
     splitter = RecursiveCharacterTextSplitter(
         chunk_size=CONFIG["CHUNK_SIZE"],
         chunk_overlap=CONFIG["CHUNK_OVERLAP"],

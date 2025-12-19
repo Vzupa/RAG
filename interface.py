@@ -56,6 +56,13 @@ def chat_title(msgs):
             return m["content"][:30]
     return "New chat"
 
+def is_vector_store_error(response: requests.Response) -> bool:
+    try:
+        detail = response.json().get("detail", "")
+        return "Vector store not found" in str(detail)
+    except Exception:
+        return False
+
 # =========================
 # Session State
 # =========================
@@ -238,6 +245,25 @@ if question and question.strip():
             })
             save_chat_history(st.session_state.chats)
         else:
-            st.error(r.text)
+            if use_rag and is_vector_store_error(r):
+                assistant_msg = (
+                    "📄 **No documents found**\n\n"
+                    "RAG works only after documents are uploaded.\n"
+                    "Please upload at least one document to continue.\n\n"
+                    "Or disable **Use RAG** to chat using general knowledge."
+                )
+            else:
+                assistant_msg = "❌ Request failed:\n\n" + r.text
+
+            # 🔑 render inside chat
+            st.markdown(assistant_msg)
+
+            # 🔑 persist in chat history
+            messages.append({
+                "role": "assistant",
+                "content": assistant_msg,
+                "meta": {},
+            })
+            save_chat_history(st.session_state.chats)
 
     st.rerun()

@@ -28,16 +28,15 @@ FastAPI wrapper around a LangChain-based RAG pipeline with multi-query + HyDE re
 
 ## Run API
 ```bash
-uvicorn fastapi_app:app --reload
+uvicorn backend:app --reload
 ```
 
 ## Run Streamlit Frontend
 ```bash
-streamlit run interface.py
+streamlit run frontend.py
 ```
 
 ## Endpoints
-- `GET /health` — health check.
 - `POST /upload` — form-data file upload (`files=@your.pdf|csv|pptx`); ingests and updates vector store. Now supports multiple files in one request.
 - `GET /documents` — Returns a list of indexed document filenames.
 - `DELETE /documents/{filename}` — Deletes a document and its chunks from the vector store.
@@ -68,6 +67,4 @@ Advanced retrieval implemented:
 - Multi-query reformulations (configurable count).
 - HyDE synthetic answer generation for retrieval.
 - Dedup and context cap to avoid overloading the LLM.
-
-
 

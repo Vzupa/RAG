@@ -98,16 +98,6 @@ def llm(req: QueryRequest):
         raise HTTPException(status_code=400, detail=str(exc))
 
 
-@app.get("/health")
-def health():
-    # Return health status.
-    stats = get_vector_store_stats()
-    return {
-        "model": CONFIG["LLM_MODEL"],
-        "documents_loaded": stats.get("documents_loaded", 0),
-    }
-
-
 @app.get("/documents", response_model=List[str])
 def documents():
     # Return a list of indexed documents.
@@ -128,4 +118,4 @@ def delete_document(filename: str):
 
 
 # To run locally:
-# uvicorn fastapi_app:app --reload
+# uvicorn backend:app --reload

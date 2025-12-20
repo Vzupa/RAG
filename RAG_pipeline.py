@@ -434,7 +434,7 @@ def _normalize_source_meta(doc: Document) -> Dict:
         doc (Document): The Document object whose metadata needs to be normalized.
 
     Returns:
-        Dict: A dictionary containing the normalized 'source', 'page', 'type', and 'location' fields.
+        Dict: A dictionary containing the normalized 'source', 'page', 'type', 'location', and label fields.
     """
     # Normalize source name to filename and page/slide/row to human-friendly numbers
     raw_source = doc.metadata.get("source")
@@ -457,11 +457,21 @@ def _normalize_source_meta(doc: Document) -> Dict:
         except Exception:
             display_loc = page_or_loc
 
+    if page_val is not None:
+        loc_label = "page"
+    elif slide_val is not None:
+        loc_label = "slide"
+    elif row_val is not None:
+        loc_label = "row"
+    else:
+        loc_label = None
+
     return {
         "source": source_name,
         "page": display_loc if page_val is not None else None,
         "type": doc.metadata.get("type"),
         "location": display_loc,
+        "location_label": loc_label,
     }
 
 
@@ -621,12 +631,17 @@ def rag_query(
     prompt = CONFIG["PROMPT_ANSWER"].format(context=context_text, question=question)
     response = llm.invoke(prompt)
 
-    # Build a deduped source list for the response with normalized page numbers and filenames
+    # Build a deduped source list for the response with normalized location info
     sources = []
     seen_sources = set()
     for doc in context_docs:
         normalized = _normalize_source_meta(doc)
-        key = (normalized["source"], normalized["page"], normalized.get("type"))
+        key = (
+            normalized["source"],
+            normalized.get("location_label"),
+            normalized.get("location"),
+            normalized.get("type"),
+        )
         if key in seen_sources:
             continue
         seen_sources.add(key)
@@ -634,10 +649,27 @@ def rag_query(
             {
                 "source": normalized["source"],
                 "page": normalized["page"],
+                "location": normalized.get("location"),
+                "location_label": normalized.get("location_label"),
                 "type": normalized.get("type"),
             }
         )
     answer_text = response.content if hasattr(response, "content") else str(response)
+
+    # Append explicit citations block to ensure the answer carries sources
+    if sources:
+        citation_lines = []
+        for src in sources:
+            line = f"- {src.get('source')}"
+            label = src.get("location_label") or "location"
+            loc = src.get("location")
+            if loc is not None:
+                line += f" ({label} {loc})"
+            if src.get("type"):
+                line += f" [{src.get('type')}]"
+            citation_lines.append(line)
+        answer_text = f"{answer_text}\n\nSources:\n" + "\n".join(citation_lines)
+
     result = {
         "answer": answer_text,
         "sources": sources,

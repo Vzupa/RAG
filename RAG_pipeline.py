@@ -22,27 +22,32 @@ except ImportError:
     HAS_MOVIEPY = False
     print("Warning: 'moviepy' not found. Video processing will fail unless installed.")
 
-# Load environment variables (.env for OPENAI_API_KEY)
+# --- Load configuration and env ---
 load_dotenv()
 
-# Load config from JSON so prompts/params are easy to tweak
 CONFIG_PATH = Path("config.json")
 if not CONFIG_PATH.exists():
     raise FileNotFoundError("config.json not found. Please create it before running the pipeline.")
 with open(CONFIG_PATH, "r", encoding="utf-8") as f:
     CONFIG = json.load(f)
 
-# Vector store location and supported file types
+# --- Data locations and supported types ---
 DATA_DIR = Path("Data")
 VECTOR_DIR = DATA_DIR / "vector_store"
 SUPPORTED_EXTS = {
-    "pdf", "pptx", "csv", 
+    "pdf", "pptx", "csv",
     "jpg", "jpeg", "png",       # Images
     "mp4", "mov", "avi", "mp3"  # Video/Audio
 }
-# Ensure vector store directory exists
+
+# --- Setup helpers ---
 def _ensure_dirs():
-    """Ensures that the directory for the vector store exists."""
+    """
+    Ensure the vector store directory exists.
+
+    Returns:
+        None
+    """
     VECTOR_DIR.mkdir(parents=True, exist_ok=True)
 
 # Require OpenAI API key
@@ -316,20 +321,15 @@ def _load_or_create_vector_store(embedding_model: OpenAIEmbeddings):
 
 def _build_llm(model_override: Optional[str] = None, temperature_override: Optional[float] = None) -> ChatOpenAI:
     """
-    Initializes and returns a ChatOpenAI client with configurable model and temperature.
-
-    This function provides a centralized way to create an instance of the ChatOpenAI client.
-    It uses default values from the global `CONFIG` but allows for overriding the model name
-    and temperature on a per-call basis.
+    Create a ChatOpenAI client with optional model/temperature overrides.
 
     Args:
-        model_override (Optional[str]): If provided, this model name will be used instead of the one in `CONFIG`.
-        temperature_override (Optional[float]): If provided, this temperature will be used instead of the one in `CONFIG`.
+        model_override (Optional[str]): Alternate model name to use.
+        temperature_override (Optional[float]): Alternate temperature to use.
 
     Returns:
-        ChatOpenAI: An instance of the ChatOpenAI client.
+        ChatOpenAI: Configured chat model client.
     """
-    # Convenience to build an LLM client with optional overrides
     return ChatOpenAI(
         model=model_override or CONFIG["LLM_MODEL"],
         temperature=CONFIG["LLM_TEMPERATURE"] if temperature_override is None else temperature_override,
@@ -534,7 +534,6 @@ def rag_query(
     temperature: Optional[float] = None,
     multiquery: Optional[bool] = None,
     hyde: Optional[bool] = None,
-    mmr: Optional[bool] = None,
 ) -> Dict:
     """
     Executes a full Retrieval-Augmented Generation (RAG) query.
@@ -555,7 +554,6 @@ def rag_query(
         temperature (Optional[float]): The generation temperature. Overrides `CONFIG`.
         multiquery (Optional[bool]): Enables or disables Multi-Query retrieval. Overrides `CONFIG`.
         hyde (Optional[bool]): Enables or disables HyDE retrieval. Overrides `CONFIG`.
-        mmr (Optional[bool]): Enables or disables Maximal Marginal Relevance (MMR) search. Overrides `CONFIG`.
 
     Returns:
         Dict: A dictionary containing the generated answer, a list of sources, and, if enabled,
@@ -582,9 +580,8 @@ def rag_query(
     if CONFIG.get("RAG_FILTER_METADATA"):
         search_kwargs["filter"] = CONFIG["RAG_FILTER_METADATA"]
 
-    search_type = "mmr" if mmr else CONFIG["RAG_SEARCH_TYPE"]
     retriever = vector_store.as_retriever(
-        search_type=search_type,
+        search_type=CONFIG["RAG_SEARCH_TYPE"],
         search_kwargs=search_kwargs,
     )
 

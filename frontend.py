@@ -5,9 +5,7 @@ import requests
 import streamlit as st
 from dotenv import load_dotenv
 
-# =========================
-# Config
-# =========================
+# --- Config ---
 load_dotenv()
 API_BASE = os.getenv("RAG_API_URL", "http://127.0.0.1:8000").rstrip("/")
 CHAT_HISTORY_FILE = "chat_history.json"
@@ -20,10 +18,14 @@ st.set_page_config(
 
 st.title("💬 RAG Chat System")
 
-# =========================
-# Helpers
-# =========================
+# --- Helpers ---
 def load_chat_history():
+    """
+    Load persisted chats from disk.
+
+    Returns:
+        dict: Chat history keyed by chat id.
+    """
     if os.path.exists(CHAT_HISTORY_FILE):
         try:
             with open(CHAT_HISTORY_FILE, "r", encoding="utf-8") as f:
@@ -33,16 +35,37 @@ def load_chat_history():
     return {}
 
 def save_chat_history(chats):
+    """
+    Persist chats to disk.
+
+    Args:
+        chats (dict): Chat history keyed by chat id.
+    """
     with open(CHAT_HISTORY_FILE, "w", encoding="utf-8") as f:
         json.dump(chats, f, indent=2, ensure_ascii=False)
 
 def new_chat():
+    """
+    Start a new empty chat and set it active.
+
+    Returns:
+        None
+    """
     cid = str(uuid.uuid4())
     st.session_state.chats[cid] = []
     st.session_state.active_chat_id = cid
     save_chat_history(st.session_state.chats)
 
 def delete_chat(cid):
+    """
+    Remove a chat by id and pick a new active chat if needed.
+
+    Args:
+        cid (str): Chat id to remove.
+
+    Returns:
+        None
+    """
     st.session_state.chats.pop(cid, None)
     if not st.session_state.chats:
         new_chat()
@@ -51,21 +74,37 @@ def delete_chat(cid):
     save_chat_history(st.session_state.chats)
 
 def chat_title(msgs):
+    """
+    Return a short title based on the first user message.
+
+    Args:
+        msgs (list[dict]): Messages in a chat.
+
+    Returns:
+        str: Short title string.
+    """
     for m in msgs:
         if m["role"] == "user" and m["content"].strip():
             return m["content"][:30]
     return "New chat"
 
 def is_vector_store_error(response: requests.Response) -> bool:
+    """
+    Detect a missing vector store error from backend responses.
+
+    Args:
+        response (requests.Response): HTTP response from backend.
+
+    Returns:
+        bool: True if vector store missing, else False.
+    """
     try:
         detail = response.json().get("detail", "")
         return "Vector store not found" in str(detail)
     except Exception:
         return False
 
-# =========================
-# Session State
-# =========================
+# --- Session state ---
 if "chats" not in st.session_state:
     st.session_state.chats = load_chat_history()
 
@@ -75,13 +114,11 @@ if "active_chat_id" not in st.session_state:
     else:
         new_chat()
 
-# 🔑 uploader reset key (CORE FIX)
+# Note: keep a stable key to force-reset the uploader after use
 if "uploader_key" not in st.session_state:
     st.session_state.uploader_key = str(uuid.uuid4())
 
-# =========================
-# Sidebar
-# =========================
+# --- Sidebar ---
 with st.sidebar:
     st.header("📚 Chats")
 
@@ -112,9 +149,7 @@ with st.sidebar:
 
     st.divider()
 
-    # =========================
-    # Retrieval Settings
-    # =========================
+    # --- Retrieval settings ---
     st.header("⚙️ Retrieval Settings")
 
     use_rag = st.toggle("Use RAG", value=True)
@@ -124,9 +159,7 @@ with st.sidebar:
 
     st.divider()
 
-    # =========================
-    # Upload Documents
-    # =========================
+    # --- Upload documents ---
     st.header("📄 Upload Documents")
 
     uploaded_files = st.file_uploader(
@@ -158,15 +191,13 @@ with st.sidebar:
         else:
             st.error(r.text)
 
-        # reset uploader after successful upload
+        # Note: reset uploader after successful upload so the same file can be reselected
         st.session_state.uploader_key = str(uuid.uuid4())
         st.rerun()
 
     st.divider()
 
-    # =========================
-    # Indexed Documents
-    # =========================
+    # --- Indexed documents ---
     st.header("🗂️ Indexed Documents")
 
     try:
@@ -177,16 +208,14 @@ with st.sidebar:
             if c2.button("🗑️", key=f"doc_{d}"):
                 requests.delete(f"{API_BASE}/documents/{d}", timeout=10)
 
-                # 🔑 reset uploader so deleted file isn't reuploaded
+                # Note: reset uploader so deleted file isn't reuploaded automatically
                 st.session_state.uploader_key = str(uuid.uuid4())
 
                 st.rerun()
     except Exception:
         st.caption("Backend unavailable")
 
-# =========================
-# Main Chat Panel
-# =========================
+# --- Main chat panel ---
 messages = st.session_state.chats[st.session_state.active_chat_id]
 
 for msg in messages:
@@ -211,9 +240,7 @@ for msg in messages:
                         st.markdown(f"**Original Query:** {h['original']}")
                         st.write(h["hyde"])
 
-# =========================
-# Chat Input
-# =========================
+# --- Chat input ---
 question = st.chat_input("Ask a question")
 
 if question and question.strip():

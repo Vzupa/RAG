@@ -589,6 +589,10 @@ def rag_query(
     )
 
     llm = _build_llm(model_override=model, temperature_override=temperature)
+    mq_llm = _build_llm(
+        model_override=model,
+        temperature_override=CONFIG.get("MULTIQUERY_TEMPERATURE", CONFIG["LLM_TEMPERATURE"]),
+    )
 
     # Determine feature flags (request overrides config)
     use_multiquery = CONFIG.get("MULTIQUERY_ENABLED") if multiquery is None else multiquery
@@ -596,7 +600,7 @@ def rag_query(
 
     # Build query variants (multi-query) if enabled
     if use_multiquery:
-        queries = _generate_multi_queries(question, llm)
+        queries = _generate_multi_queries(question, mq_llm)
     else:
         queries = [question]
 

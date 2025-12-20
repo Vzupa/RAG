@@ -11,9 +11,10 @@
   "CHUNK_OVERLAP": 200,
   "MULTIQUERY_ENABLED": false,
   "MULTIQUERY_VARIANTS": 2,
+  "MULTIQUERY_TEMPERATURE": 0.5,
   "HYDE_ENABLED": false,
   "MAX_CONTEXT_DOCS": 8,
-  "PROMPT_MULTIQUERY": "Generate concise alternative phrasings of the question for better document retrieval. Return each variant on a new line. Do not number them.\\n\\nQuestion: {question}",
-  "PROMPT_HYDE": "Draft a concise, factual answer to the question based only on general knowledge. This is a hypothetical answer used to find similar documents.\\n\\nQuestion: {question}",
-  "PROMPT_ANSWER": "Use the provided context to answer the question. If you are unsure, say you do not know. Cite sources with (source, page/slide/row) when possible.\\n\\nContext:\\n{context}\\n\\nQuestion: {question}\\n\\nAnswer:"
+  "PROMPT_MULTIQUERY": "Generate 3 concise alternative search queries that preserve the original meaning but use different terminology, phrasing, or technical synonyms. Do NOT answer the question. Do NOT add new facts. Each line must be a standalone query suitable for vector search. Return each query on a new line with no numbering.\n\nQuestion: {question}",
+  "PROMPT_HYDE": "Write a short, neutral, encyclopedic-style paragraph that could plausibly appear in a technical document answering the question. Use precise terminology. Do NOT cite sources. Do NOT mention uncertainty, opinions, or speculation. Do NOT introduce entities not implied by the question. This text is hypothetical and will be used only for document retrieval.\n\nQuestion: {question}",
+  "PROMPT_ANSWER": "Use the provided context to answer the question. If you are unsure, say you do not know. Do not include source citations in the answer text.\\n\\nContext:\\n{context}\\n\\nQuestion: {question}\\n\\nAnswer:"
 }

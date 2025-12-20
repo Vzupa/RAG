@@ -1,0 +1,3 @@
+"PROMPT_MULTIQUERY": "Generate 3–5 concise alternative search queries that preserve the original meaning but use different terminology, phrasing, or technical synonyms. Do NOT answer the question. Do NOT add new facts. Each line must be a standalone query suitable for vector search. Return each query on a new line with no numbering.\n\nQuestion: {question}",
+
+"PROMPT_HYDE": "Write a short, neutral, encyclopedic-style paragraph that could plausibly appear in a technical document answering the question. Use precise terminology. Do NOT cite sources. Do NOT mention uncertainty, opinions, or speculation. Do NOT introduce entities not implied by the question. This text is hypothetical and will be used only for document retrieval.\n\nQuestion: {question}"

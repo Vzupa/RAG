@@ -68,3 +68,66 @@ Advanced retrieval implemented:
 - Multi-query reformulations (configurable count).
 - HyDE synthetic answer generation for retrieval.
 - Dedup and context cap to avoid overloading the LLM.
+
+
+
+
+flowchart TD
+    %% Global Styles
+    classDef storage fill:#e1f5fe,stroke:#01579b,stroke-width:2px;
+    classDef process fill:#fff3e0,stroke:#e65100,stroke-width:2px;
+    classDef llm fill:#f3e5f5,stroke:#4a148c,stroke-width:2px;
+    classDef user fill:#e8f5e9,stroke:#1b5e20,stroke-width:2px;
+
+    %% -----------------------
+    %% 1. INGESTION PIPELINE
+    %% -----------------------
+    subgraph Ingestion_Flow [Ingestion Pipeline]
+        direction TB
+        RawFiles[Raw Files] --> Router{Check File Type}
+        
+        %% Text Path
+        Router -- PDF, CSV, PPTX --> TextLoader[Standard Loaders<br/>PyPDF, CSV, PPTX]
+        
+        %% Video/Audio Path
+        Router -- MP4, AVI, MP3 --> MoviePy[MoviePy<br/>Extract Audio]
+        MoviePy --> Whisper[OpenAI Whisper<br/>Transcribe Audio]
+        
+        %% Image Path
+        Router -- JPG, PNG --> Vision[GPT-4o Vision<br/>Describe Image]
+        
+        %% Unification
+        TextLoader & Whisper & Vision --> RawDocs[Raw Documents]
+        RawDocs --> Splitter[Recursive Character<br/>Text Splitter]
+        Splitter --> Embedder1[OpenAI Embeddings]
+        Embedder1 --> VectorStore[(ChromaDB<br/>Vector Store)]:::storage
+    end
+
+    %% -----------------------
+    %% 2. QUERY PIPELINE
+    %% -----------------------
+    subgraph Query_Flow [RAG Query Pipeline]
+        direction TB
+        User((User)):::user --> Question[Input Question]
+        Question --> Optimization{Optimization<br/>Config}
+        
+        %% Query Expansion
+        Optimization -- Multi-Query --> MultiQ[Generate 3-5 Variants]:::llm
+        Optimization -- HyDE --> HydeGen[Generate Hypothetical Answer]:::llm
+        Optimization -- None --> RawQ[Raw Question]
+        
+        %% Retrieval
+        MultiQ & HydeGen & RawQ --> Embedder2[OpenAI Embeddings]
+        Embedder2 --> Retriever[Retriever Search<br/>MMR or Similarity]
+        Retriever --> VectorStore
+        VectorStore -- Return Chunks --> Dedup[Deduplication Logic<br/>Source/Loc/Content]
+        
+        %% Generation
+        Dedup --> ContextWindow[Context Window]
+        ContextWindow --> FinalPrompt[Construct Prompt]
+        FinalPrompt --> ChatModel[ChatOpenAI<br/>GPT-4o/3.5]:::llm
+        ChatModel --> FinalAnswer[Final Answer]:::user
+    end
+
+    %% Link the flows
+    VectorStore -.-> Retriever

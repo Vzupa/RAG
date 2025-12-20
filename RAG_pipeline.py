@@ -703,13 +703,11 @@ def llm_only(
     """
     # Calls the LLM directly without retrieval for hallucination comparison.
     _require_openai_key()
-    prompt_template = CONFIG.get("PROMPT_LLM")
-    prompt_text = prompt_template.format(question=question) if prompt_template else question
     llm = ChatOpenAI(
         model=model or CONFIG["LLM_MODEL"],
         temperature=CONFIG["LLM_TEMPERATURE"] if temperature is None else temperature,
     )
-    response = llm.invoke(prompt_text)
+    response = llm.invoke(question)
     return response.content if hasattr(response, "content") else response
 
 

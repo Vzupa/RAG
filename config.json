@@ -3,7 +3,7 @@
   "LLM_TEMPERATURE": 0.0,
   "EMBEDDING_MODEL": "text-embedding-3-small",
   "RAG_SEARCH_TYPE": "similarity",
-  "RAG_SEARCH_K": 4,
+  "RAG_SEARCH_K": 3,
   "RAG_FETCH_K": 0,
   "RAG_SCORE_THRESHOLD": null,
   "RAG_FILTER_METADATA": null,

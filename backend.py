@@ -1,5 +1,6 @@
 import os
 import tempfile
+import time
 from pathlib import Path
 from typing import List, Optional
 
@@ -91,12 +92,15 @@ def rag(req: QueryRequest):
     if not req.question:
         raise HTTPException(status_code=400, detail="A 'question' is required.")
     try:
+        start_time = time.perf_counter()
         result = rag_query(
             question=req.question,
             k=req.top_k,
             multiquery=req.multiquery,
             hyde=req.hyde,
         )
+        end_time = time.perf_counter()
+        result["backend_latency"] = end_time - start_time
         return result
     except Exception as exc:
         raise HTTPException(status_code=400, detail=str(exc))
@@ -116,8 +120,11 @@ def llm(req: QueryRequest):
     if not req.question:
         raise HTTPException(status_code=400, detail="A 'question' is required.")
     try:
-        answer = llm_only(question=req.question)
-        return {"answer": answer}
+        start_time = time.perf_counter()
+        result = llm_only(question=req.question)
+        end_time = time.perf_counter()
+        result["backend_latency"] = end_time - start_time
+        return result
     except Exception as exc:
         raise HTTPException(status_code=400, detail=str(exc))
 

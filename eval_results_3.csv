@@ -1,0 +1,455 @@
+question,mode,multiquery,hyde,client_latency_seconds,backend_latency_seconds,llm_latency_seconds,answer,expected_answer,correctness
+What learning paradigm is proposed by Mbona and Eloff (2022) for detecting zero-day intrusions?,LLM,False,False,2.4532,2.4471,2.3296,"Mbona and Eloff (2022) proposed a learning paradigm based on a combination of supervised and unsupervised learning techniques for detecting zero-day intrusions. This approach leverages the strengths of both paradigms to enhance the detection capabilities of intrusion detection systems (IDS). By utilizing supervised learning, the model can learn from labeled data, while unsupervised learning allows it to identify anomalies and patterns in data without prior labeling. This hybrid approach aims to improve the detection of previously unknown threats, which is a significant challenge in cybersecurity.",Semi-supervised machine learning,
+What learning paradigm is proposed by Mbona and Eloff (2022) for detecting zero-day intrusions?,RAG,False,False,2.0827,2.0792,1.1281,"Mbona and Eloff (2022) propose a semi-supervised machine learning approach for detecting zero-day intrusions (source, page 16).
+
+Sources:
+- Mbona and Eloff - 2022 - Detecting Zero-Day Intrusion Attacks Using Semi-Supervised Machine Learning Approaches.pdf (page 17) [pdf]
+- Mbona and Eloff - 2022 - Detecting Zero-Day Intrusion Attacks Using Semi-Supervised Machine Learning Approaches.pdf (page 1) [pdf]
+- Mbona and Eloff - 2022 - Detecting Zero-Day Intrusion Attacks Using Semi-Supervised Machine Learning Approaches.pdf (page 15) [pdf]",Semi-supervised machine learning,
+What learning paradigm is proposed by Mbona and Eloff (2022) for detecting zero-day intrusions?,RAG_MQ,True,False,3.8492,3.8444,1.3271,"Mbona and Eloff (2022) propose a semi-supervised machine learning approach for detecting zero-day intrusions. This approach is highlighted as effective in identifying zero-day attacks by utilizing features indicative of anomalous behavior (source, page 16).
+
+Sources:
+- Mbona and Eloff - 2022 - Detecting Zero-Day Intrusion Attacks Using Semi-Supervised Machine Learning Approaches.pdf (page 17) [pdf]
+- Mbona and Eloff - 2022 - Detecting Zero-Day Intrusion Attacks Using Semi-Supervised Machine Learning Approaches.pdf (page 1) [pdf]
+- Mbona and Eloff - 2022 - Detecting Zero-Day Intrusion Attacks Using Semi-Supervised Machine Learning Approaches.pdf (page 15) [pdf]
+- Wategaonkar et al. - 2024 - Targeting Insider Threats and Zero-Day Vulnerabilities with Advanced Machine Learning and Behavioral.pdf (page 5) [pdf]
+- Mbona and Eloff - 2022 - Detecting Zero-Day Intrusion Attacks Using Semi-Supervised Machine Learning Approaches.pdf (page 4) [pdf]
+- El Husseini et al. - 2024 - Advanced Machine Learning Approaches for Zero-Day Attack Detection A Review.pdf (page 4) [pdf]
+- El Husseini et al. - 2024 - Advanced Machine Learning Approaches for Zero-Day Attack Detection A Review.pdf (page 2) [pdf]
+- El Husseini et al. - 2024 - Advanced Machine Learning Approaches for Zero-Day Attack Detection A Review.pdf (page 1) [pdf]",Semi-supervised machine learning,
+What learning paradigm is proposed by Mbona and Eloff (2022) for detecting zero-day intrusions?,RAG_HyDE,False,True,5.4371,5.4325,1.5391,"Mbona and Eloff (2022) propose a semi-supervised machine learning approach for detecting zero-day intrusions (source, page). This methodology leverages both labeled and unlabeled data to enhance the detection capabilities of network intrusion detection systems (NIDS) (source, page).
+
+Sources:
+- Mbona and Eloff - 2022 - Detecting Zero-Day Intrusion Attacks Using Semi-Supervised Machine Learning Approaches.pdf (page 4) [pdf]
+- Mbona and Eloff - 2022 - Detecting Zero-Day Intrusion Attacks Using Semi-Supervised Machine Learning Approaches.pdf (page 2) [pdf]
+- Mbona and Eloff - 2022 - Detecting Zero-Day Intrusion Attacks Using Semi-Supervised Machine Learning Approaches.pdf (page 15) [pdf]",Semi-supervised machine learning,
+What learning paradigm is proposed by Mbona and Eloff (2022) for detecting zero-day intrusions?,RAG_MQ_HyDE,True,True,12.2681,12.2632,1.5235,"Mbona and Eloff (2022) propose the use of semi-supervised machine learning (ML) approaches for detecting zero-day intrusions (source, page). This methodology is highlighted as effective in identifying zero-day attacks by utilizing features indicative of anomalous behavior (source, page).
+
+Sources:
+- Mbona and Eloff - 2022 - Detecting Zero-Day Intrusion Attacks Using Semi-Supervised Machine Learning Approaches.pdf (page 4) [pdf]
+- Mbona and Eloff - 2022 - Detecting Zero-Day Intrusion Attacks Using Semi-Supervised Machine Learning Approaches.pdf (page 15) [pdf]
+- Mbona and Eloff - 2022 - Detecting Zero-Day Intrusion Attacks Using Semi-Supervised Machine Learning Approaches.pdf (page 2) [pdf]
+- Wategaonkar et al. - 2024 - Targeting Insider Threats and Zero-Day Vulnerabilities with Advanced Machine Learning and Behavioral.pdf (page 1) [pdf]
+- Wategaonkar et al. - 2024 - Targeting Insider Threats and Zero-Day Vulnerabilities with Advanced Machine Learning and Behavioral.pdf (page 5) [pdf]
+- Mbona and Eloff - 2022 - Detecting Zero-Day Intrusion Attacks Using Semi-Supervised Machine Learning Approaches.pdf (page 3) [pdf]",Semi-supervised machine learning,
+On which type of data is the model in Mbona and Eloff (2022) primarily trained?,LLM,False,False,1.5759,1.5716,1.5705,"The model in Mbona and Eloff (2022) is primarily trained on data related to cybersecurity, specifically focusing on network traffic data. The study emphasizes the use of machine learning techniques to detect and classify various types of cyber threats based on this data. If you need more specific details or insights from the paper, please let me know!",Benign network traffic only,
+On which type of data is the model in Mbona and Eloff (2022) primarily trained?,RAG,False,False,2.2474,2.2430,1.5327,"The model in Mbona and Eloff (2022) is primarily trained on a dataset consisting of only one class (i.e., benign) of network traffic, as indicated in the context discussing the semi-supervised machine learning approach proposed by Duong et al. (source, page).
+
+Sources:
+- Mbona and Eloff - 2022 - Detecting Zero-Day Intrusion Attacks Using Semi-Supervised Machine Learning Approaches.pdf (page 17) [pdf]
+- El Husseini et al. - 2024 - Advanced Machine Learning Approaches for Zero-Day Attack Detection A Review.pdf (page 6) [pdf]
+- Mbona and Eloff - 2022 - Detecting Zero-Day Intrusion Attacks Using Semi-Supervised Machine Learning Approaches.pdf (page 4) [pdf]",Benign network traffic only,
+On which type of data is the model in Mbona and Eloff (2022) primarily trained?,RAG_MQ,True,False,5.3975,5.3930,2.5392,"The model in Mbona and Eloff (2022) is primarily trained on a dataset consisting of benign network traffic, specifically using a semi-supervised machine learning approach. The training dataset ideally should consist of only one class, which is benign network traffic, to effectively identify anomalies and detect zero-day attacks (source, page).
+
+Sources:
+- Mbona and Eloff - 2022 - Detecting Zero-Day Intrusion Attacks Using Semi-Supervised Machine Learning Approaches.pdf (page 17) [pdf]
+- El Husseini et al. - 2024 - Advanced Machine Learning Approaches for Zero-Day Attack Detection A Review.pdf (page 6) [pdf]
+- Mbona and Eloff - 2022 - Detecting Zero-Day Intrusion Attacks Using Semi-Supervised Machine Learning Approaches.pdf (page 4) [pdf]
+- Mbona and Eloff - 2022 - Detecting Zero-Day Intrusion Attacks Using Semi-Supervised Machine Learning Approaches.pdf (page 12) [pdf]
+- Mbona and Eloff - 2022 - Detecting Zero-Day Intrusion Attacks Using Semi-Supervised Machine Learning Approaches.pdf (page 7) [pdf]
+- El Husseini et al. - 2024 - Advanced Machine Learning Approaches for Zero-Day Attack Detection A Review.pdf (page 7) [pdf]
+- Mbona and Eloff - 2022 - Detecting Zero-Day Intrusion Attacks Using Semi-Supervised Machine Learning Approaches.pdf (page 2) [pdf]",Benign network traffic only,
+On which type of data is the model in Mbona and Eloff (2022) primarily trained?,RAG_HyDE,False,True,4.4040,4.3994,2.0686,"The model in Mbona and Eloff (2022) is primarily trained on network intrusion datasets to detect zero-day attacks using semi-supervised machine learning approaches (source, page 69834).
+
+Sources:
+- Mbona and Eloff - 2022 - Detecting Zero-Day Intrusion Attacks Using Semi-Supervised Machine Learning Approaches.pdf (page 17) [pdf]
+- Mbona and Eloff - 2022 - Detecting Zero-Day Intrusion Attacks Using Semi-Supervised Machine Learning Approaches.pdf (page 13) [pdf]
+- Mbona and Eloff - 2022 - Detecting Zero-Day Intrusion Attacks Using Semi-Supervised Machine Learning Approaches.pdf (page 3) [pdf]",Benign network traffic only,
+On which type of data is the model in Mbona and Eloff (2022) primarily trained?,RAG_MQ_HyDE,True,True,11.8774,11.8727,2.9660,"The model in Mbona and Eloff (2022) is primarily trained on a dataset consisting of only one class of network traffic, specifically benign traffic, for the semi-supervised machine learning approach (source, page).
+
+Sources:
+- Mbona and Eloff - 2022 - Detecting Zero-Day Intrusion Attacks Using Semi-Supervised Machine Learning Approaches.pdf (page 17) [pdf]
+- Mbona and Eloff - 2022 - Detecting Zero-Day Intrusion Attacks Using Semi-Supervised Machine Learning Approaches.pdf (page 3) [pdf]
+- Mbona and Eloff - 2022 - Detecting Zero-Day Intrusion Attacks Using Semi-Supervised Machine Learning Approaches.pdf (page 2) [pdf]
+- Mbona and Eloff - 2022 - Detecting Zero-Day Intrusion Attacks Using Semi-Supervised Machine Learning Approaches.pdf (page 13) [pdf]
+- Mbona and Eloff - 2022 - Detecting Zero-Day Intrusion Attacks Using Semi-Supervised Machine Learning Approaches.pdf (page 4) [pdf]
+- Mbona and Eloff - 2022 - Detecting Zero-Day Intrusion Attacks Using Semi-Supervised Machine Learning Approaches.pdf (page 11) [pdf]",Benign network traffic only,
+Which principle is used for feature selection in Mbona and Eloff (2022)?,LLM,False,False,3.0090,3.0030,3.0023,"In the study by Mbona and Eloff (2022), the principle used for feature selection is the **Minimum Redundancy Maximum Relevance (mRMR)** principle. This approach aims to select features that have the highest relevance to the target variable while ensuring that the selected features are minimally redundant among themselves. This method is commonly used in various machine learning and data mining applications to improve model performance and interpretability. If you need more specific details or context from the paper, please let me know!",Benford’s Law,
+Which principle is used for feature selection in Mbona and Eloff (2022)?,RAG,False,False,3.3031,3.2981,2.6158,"In the study by Mbona and Eloff (2022), feature selection is emphasized as a crucial process for improving the performance and computational efficiency of machine learning models, particularly in the context of network intrusion datasets. They highlight that significant features are those that can affect the performance or computational cost of a machine learning model (source, page 69825). Additionally, they reference various methods used in feature selection, including PCA (Principal Component Analysis) and information gain (IG), as applied in other studies (source, page 69829).
+
+Sources:
+- Mbona and Eloff - 2022 - Detecting Zero-Day Intrusion Attacks Using Semi-Supervised Machine Learning Approaches.pdf (page 2) [pdf]
+- Mbona and Eloff - 2022 - Detecting Zero-Day Intrusion Attacks Using Semi-Supervised Machine Learning Approaches.pdf (page 4) [pdf]
+- Mbona and Eloff - 2022 - Detecting Zero-Day Intrusion Attacks Using Semi-Supervised Machine Learning Approaches.pdf (page 8) [pdf]",Benford’s Law,
+Which principle is used for feature selection in Mbona and Eloff (2022)?,RAG_MQ,True,False,5.2570,5.2528,2.0421,"In the study by Mbona and Eloff (2022), feature selection is emphasized as a crucial process for improving the performance and computational efficiency of machine learning models in network intrusion detection systems (NIDS). They highlight the importance of identifying significant features from high-dimensional datasets, particularly in the context of network traffic data, which often contains redundant attributes that can negatively impact model accuracy (source, page 69825). The study mentions various methods for feature selection, including the use of significant features that can affect model performance and computational cost (source, page 69825).
+
+Sources:
+- Mbona and Eloff - 2022 - Detecting Zero-Day Intrusion Attacks Using Semi-Supervised Machine Learning Approaches.pdf (page 2) [pdf]
+- Mbona and Eloff - 2022 - Detecting Zero-Day Intrusion Attacks Using Semi-Supervised Machine Learning Approaches.pdf (page 4) [pdf]
+- Mbona and Eloff - 2022 - Detecting Zero-Day Intrusion Attacks Using Semi-Supervised Machine Learning Approaches.pdf (page 8) [pdf]
+- Mbona and Eloff - 2022 - Detecting Zero-Day Intrusion Attacks Using Semi-Supervised Machine Learning Approaches.pdf (page 5) [pdf]
+- Mbona and Eloff - 2022 - Detecting Zero-Day Intrusion Attacks Using Semi-Supervised Machine Learning Approaches.pdf (page 16) [pdf]",Benford’s Law,
+Which principle is used for feature selection in Mbona and Eloff (2022)?,RAG_HyDE,False,True,3.5841,3.5797,1.4302,"The principle used for feature selection in Mbona and Eloff (2022) is based on identifying significant features that can affect the performance or computational cost of a machine learning (ML) model. This is particularly important for network intrusion datasets, which are characterized by high dimensions and disproportional sizes of benign and malicious network traffic (source, page 69825).
+
+Sources:
+- Mbona and Eloff - 2022 - Detecting Zero-Day Intrusion Attacks Using Semi-Supervised Machine Learning Approaches.pdf (page 2) [pdf]
+- Mbona and Eloff - 2022 - Detecting Zero-Day Intrusion Attacks Using Semi-Supervised Machine Learning Approaches.pdf (page 4) [pdf]
+- Mbona and Eloff - 2022 - Detecting Zero-Day Intrusion Attacks Using Semi-Supervised Machine Learning Approaches.pdf (page 17) [pdf]",Benford’s Law,
+Which principle is used for feature selection in Mbona and Eloff (2022)?,RAG_MQ_HyDE,True,True,12.9284,12.9241,3.1691,"In the study by Mbona and Eloff (2022), feature selection is emphasized as a crucial process for improving the performance and computational efficiency of machine learning models, particularly in the context of network intrusion detection systems (NIDS). The authors mention that significant features can be defined as those that affect the performance or computational cost of an ML model (source, page 69825). They also highlight the importance of identifying significant features in high-dimensional datasets, which is a common characteristic of network intrusion datasets (source, page 69825). 
+
+While the specific principles or methods of feature selection used in their study are not detailed in the provided context, it is noted that other studies have applied techniques such as Principal Component Analysis (PCA) and Information Gain (IG) for feature selection in similar datasets (source, page 69829).
+
+Sources:
+- Mbona and Eloff - 2022 - Detecting Zero-Day Intrusion Attacks Using Semi-Supervised Machine Learning Approaches.pdf (page 2) [pdf]
+- Mbona and Eloff - 2022 - Detecting Zero-Day Intrusion Attacks Using Semi-Supervised Machine Learning Approaches.pdf (page 4) [pdf]
+- Mbona and Eloff - 2022 - Detecting Zero-Day Intrusion Attacks Using Semi-Supervised Machine Learning Approaches.pdf (page 17) [pdf]
+- Mbona and Eloff - 2022 - Detecting Zero-Day Intrusion Attacks Using Semi-Supervised Machine Learning Approaches.pdf (page 8) [pdf]
+- Wategaonkar et al. - 2024 - Targeting Insider Threats and Zero-Day Vulnerabilities with Advanced Machine Learning and Behavioral.pdf (page 3) [pdf]",Benford’s Law,
+Which machine learning model achieved the best performance in Mbona and Eloff (2022)?,LLM,False,False,2.0378,2.0334,2.0327,"I don't have access to specific articles or their contents, including ""Mbona and Eloff (2022)."" To find out which machine learning model achieved the best performance in that study, I recommend checking the publication directly through academic databases or journals. If you have access to the paper, you can look for sections discussing results, comparisons of models, or performance metrics to find the information you need.",One-Class Support Vector Machine (OCSVM),
+Which machine learning model achieved the best performance in Mbona and Eloff (2022)?,RAG,False,False,5.4168,5.4118,4.8886,"The One-Class Support Vector Machine (OCSVM) achieved the best performance in the study by Mbona and Eloff (2022). It recorded the highest Matthews correlation coefficient (MCC) of 74%, precision of 84%, recall of 95%, and F1 score of 85% using the semi-supervised approach (source, page 69835).
+
+Sources:
+- Mbona and Eloff - 2022 - Detecting Zero-Day Intrusion Attacks Using Semi-Supervised Machine Learning Approaches.pdf (page 17) [pdf]
+- Mbona and Eloff - 2022 - Detecting Zero-Day Intrusion Attacks Using Semi-Supervised Machine Learning Approaches.pdf (page 3) [pdf]
+- Mbona and Eloff - 2022 - Detecting Zero-Day Intrusion Attacks Using Semi-Supervised Machine Learning Approaches.pdf (page 14) [pdf]",One-Class Support Vector Machine (OCSVM),
+Which machine learning model achieved the best performance in Mbona and Eloff (2022)?,RAG_MQ,True,False,7.7012,7.6965,4.2022,"The One-Class Support Vector Machine (OCSVM) achieved the best performance in the study by Mbona and Eloff (2022). It recorded the highest Matthews correlation coefficient (MCC) of 74%, precision of 84%, recall of 95%, and F1 score of 85% using the semi-supervised approach (source, page 69835).
+
+Sources:
+- Mbona and Eloff - 2022 - Detecting Zero-Day Intrusion Attacks Using Semi-Supervised Machine Learning Approaches.pdf (page 17) [pdf]
+- Mbona and Eloff - 2022 - Detecting Zero-Day Intrusion Attacks Using Semi-Supervised Machine Learning Approaches.pdf (page 3) [pdf]
+- Mbona and Eloff - 2022 - Detecting Zero-Day Intrusion Attacks Using Semi-Supervised Machine Learning Approaches.pdf (page 14) [pdf]
+- Mbona and Eloff - 2022 - Detecting Zero-Day Intrusion Attacks Using Semi-Supervised Machine Learning Approaches.pdf (page 4) [pdf]
+- El Husseini et al. - 2024 - Advanced Machine Learning Approaches for Zero-Day Attack Detection A Review.pdf (page 1) [pdf]
+- Wategaonkar et al. - 2024 - Targeting Insider Threats and Zero-Day Vulnerabilities with Advanced Machine Learning and Behavioral.pdf (page 2) [pdf]",One-Class Support Vector Machine (OCSVM),
+Which machine learning model achieved the best performance in Mbona and Eloff (2022)?,RAG_HyDE,False,True,6.4328,6.4283,1.8669,"The One-Class Support Vector Machine (OCSVM) achieved the best performance in the study by Mbona and Eloff (2022). It recorded the highest metrics, including a Matthews correlation coefficient (MCC) of 74%, precision of 84%, recall of 95%, and an F1 score of 85% using a semi-supervised approach (source, page 5).
+
+Sources:
+- Wategaonkar et al. - 2024 - Targeting Insider Threats and Zero-Day Vulnerabilities with Advanced Machine Learning and Behavioral.pdf (page 3) [pdf]
+- Wategaonkar et al. - 2024 - Targeting Insider Threats and Zero-Day Vulnerabilities with Advanced Machine Learning and Behavioral.pdf (page 5) [pdf]
+- Mbona and Eloff - 2022 - Detecting Zero-Day Intrusion Attacks Using Semi-Supervised Machine Learning Approaches.pdf (page 14) [pdf]",One-Class Support Vector Machine (OCSVM),
+Which machine learning model achieved the best performance in Mbona and Eloff (2022)?,RAG_MQ_HyDE,True,True,10.7457,10.7410,1.6208,"The integrated cybersecurity solution that combines behavioral analytics with machine learning achieved the best performance in the study by Mbona and Eloff (2022). This method outperformed state-of-the-art methods, with an F1-score of 0.93, recall of 0.94, and accuracy of 0.93 (source, page 5).
+
+Sources:
+- Wategaonkar et al. - 2024 - Targeting Insider Threats and Zero-Day Vulnerabilities with Advanced Machine Learning and Behavioral.pdf (page 3) [pdf]
+- Mbona and Eloff - 2022 - Detecting Zero-Day Intrusion Attacks Using Semi-Supervised Machine Learning Approaches.pdf (page 10) [pdf]
+- Mbona and Eloff - 2022 - Detecting Zero-Day Intrusion Attacks Using Semi-Supervised Machine Learning Approaches.pdf (page 13) [pdf]
+- El Husseini et al. - 2024 - Advanced Machine Learning Approaches for Zero-Day Attack Detection A Review.pdf (page 3) [pdf]
+- El Husseini et al. - 2024 - Advanced Machine Learning Approaches for Zero-Day Attack Detection A Review.pdf (page 4) [pdf]
+- Mbona and Eloff - 2022 - Detecting Zero-Day Intrusion Attacks Using Semi-Supervised Machine Learning Approaches.pdf (page 17) [pdf]
+- Wategaonkar et al. - 2024 - Targeting Insider Threats and Zero-Day Vulnerabilities with Advanced Machine Learning and Behavioral.pdf (page 5) [pdf]",One-Class Support Vector Machine (OCSVM),
+Why are supervised learning methods weak for zero-day attack detection according to the literature?,LLM,False,False,8.0861,8.0819,8.0811,"Supervised learning methods can be weak for zero-day attack detection for several reasons, as highlighted in the literature:
+
+1. **Lack of Labeled Data**: Supervised learning relies on labeled datasets for training. Zero-day attacks, by definition, exploit vulnerabilities that are unknown at the time of their occurrence, meaning there are no labeled examples of these attacks in the training data. This absence of labeled instances makes it difficult for supervised models to learn the characteristics of zero-day attacks.
+
+2. **Dynamic Nature of Attacks**: Zero-day attacks often involve novel techniques and tactics that differ significantly from previously known attacks. Supervised models trained on historical data may not generalize well to these new, unseen attack patterns, leading to poor detection rates.
+
+3. **Imbalanced Datasets**: In many cases, the number of benign instances far outweighs the number of attack instances in the training data. This imbalance can lead to models that are biased towards the majority class (benign traffic), resulting in high false negative rates for zero-day attacks.
+
+4. **Feature Engineering Challenges**: Effective feature extraction is crucial for supervised learning. However, identifying relevant features that can capture the essence of zero-day attacks is challenging, especially when the attacks are designed to evade detection.
+
+5. **Evasion Techniques**: Attackers often employ evasion techniques to bypass detection systems. Supervised models may be trained on specific attack signatures or patterns, making them vulnerable to variations or modifications of those attacks that were not present in the training data.
+
+6. **Overfitting**: Supervised models can overfit to the training data, especially if the dataset is small or not representative of the broader attack landscape. This overfitting can lead to poor performance when encountering new, unseen attacks.
+
+7. **Adaptation to Evolving Threats**: The threat landscape is constantly evolving, and supervised models may become outdated quickly if they are not retrained regularly with new data. This can hinder their ability to detect zero-day attacks that emerge after the model was last trained.
+
+Due to these challenges, alternative approaches such as unsupervised learning, semi-supervised learning, or anomaly detection methods are often explored for zero-day attack detection, as they can better handle the lack of labeled data and adapt to new, unseen threats.",They require labeled attack data and generalize poorly to unseen attacks,
+Why are supervised learning methods weak for zero-day attack detection according to the literature?,RAG,False,False,3.2764,3.2722,2.9292,"Supervised learning methods are considered weak for zero-day attack detection primarily due to their constraints related to restricted attack scenarios. These methods rely on labeled datasets, which may not adequately represent the variety of zero-day attacks that can occur, as they exploit undisclosed vulnerabilities that lack patches (source, page). Consequently, the models trained on these limited datasets may not generalize well to new, unseen attack types, leading to potential gaps in detection capabilities (source, page). Additionally, while supervised techniques can achieve high detection accuracy (up to 98%), their effectiveness is often compromised by the limited diversity of attack scenarios they are exposed to during training (source, page).
+
+Sources:
+- El Husseini et al. - 2024 - Advanced Machine Learning Approaches for Zero-Day Attack Detection A Review.pdf (page 4) [pdf]
+- El Husseini et al. - 2024 - Advanced Machine Learning Approaches for Zero-Day Attack Detection A Review.pdf (page 5) [pdf]
+- Mbona and Eloff - 2022 - Detecting Zero-Day Intrusion Attacks Using Semi-Supervised Machine Learning Approaches.pdf (page 4) [pdf]",They require labeled attack data and generalize poorly to unseen attacks,
+Why are supervised learning methods weak for zero-day attack detection according to the literature?,RAG_MQ,True,False,5.8437,5.8393,2.6571,"Supervised learning methods are considered weak for zero-day attack detection primarily due to their heavy reliance on labeled data for training. In the context of zero-day attacks, such labeled data is often limited or entirely absent, making it challenging to effectively train these models (source, page). Additionally, while supervised techniques can achieve high detection accuracy, they are constrained by the restricted attack scenarios they are trained on, which may not encompass the diverse range of zero-day threats that could emerge (source, page). This limitation can hinder their adaptability and effectiveness in real-world situations where new and unknown vulnerabilities are exploited.
+
+Sources:
+- El Husseini et al. - 2024 - Advanced Machine Learning Approaches for Zero-Day Attack Detection A Review.pdf (page 4) [pdf]
+- El Husseini et al. - 2024 - Advanced Machine Learning Approaches for Zero-Day Attack Detection A Review.pdf (page 5) [pdf]
+- Mbona and Eloff - 2022 - Detecting Zero-Day Intrusion Attacks Using Semi-Supervised Machine Learning Approaches.pdf (page 4) [pdf]
+- El Husseini et al. - 2024 - Advanced Machine Learning Approaches for Zero-Day Attack Detection A Review.pdf (page 6) [pdf]",They require labeled attack data and generalize poorly to unseen attacks,
+Why are supervised learning methods weak for zero-day attack detection according to the literature?,RAG_HyDE,False,True,6.4571,6.4527,2.3626,"Supervised learning methods are considered weak for zero-day attack detection because they rely heavily on pre-labeled datasets and established patterns. These models depend on manually produced features and require a significant amount of labeled data for training. As a result, they struggle to generalize from insufficient or nonexistent past instances of zero-day attacks, which exploit undisclosed vulnerabilities that lack patches (source, page). This limitation makes them less effective in identifying new and unpredictable threats that have not been previously encountered or labeled.
+
+Sources:
+- El Husseini et al. - 2024 - Advanced Machine Learning Approaches for Zero-Day Attack Detection A Review.pdf (page 4) [pdf]
+- El Husseini et al. - 2024 - Advanced Machine Learning Approaches for Zero-Day Attack Detection A Review.pdf (page 5) [pdf]",They require labeled attack data and generalize poorly to unseen attacks,
+Why are supervised learning methods weak for zero-day attack detection according to the literature?,RAG_MQ_HyDE,True,True,14.5763,14.5721,2.8046,"Supervised learning methods are considered weak for zero-day attack detection primarily due to their heavy reliance on labeled data for training. In the context of zero-day attacks, such labeled data is often limited or entirely absent, making it challenging to effectively train these models (source, page/slide/row). This lack of sufficient training data can hinder the model's ability to generalize and accurately identify new, previously unknown threats (source, page/slide/row). Additionally, while unsupervised techniques like autoencoders can be useful, their effectiveness is also constrained by the quality and diversity of the available training data (source, page/slide/row).
+
+Sources:
+- El Husseini et al. - 2024 - Advanced Machine Learning Approaches for Zero-Day Attack Detection A Review.pdf (page 4) [pdf]
+- El Husseini et al. - 2024 - Advanced Machine Learning Approaches for Zero-Day Attack Detection A Review.pdf (page 5) [pdf]
+- El Husseini et al. - 2024 - Advanced Machine Learning Approaches for Zero-Day Attack Detection A Review.pdf (page 6) [pdf]",They require labeled attack data and generalize poorly to unseen attacks,
+What types of threats are addressed in Wategaonkar et al. (2024)?,LLM,False,False,1.6341,1.6301,1.6296,"I'm sorry, but I don't have access to specific articles or their content, including ""Wategaonkar et al. (2024)."" However, if you can provide a summary or key points from the article, I would be happy to help you analyze or discuss the types of threats it addresses. Alternatively, you can check academic databases or the publication itself for detailed information.",Insider threats and zero-day vulnerabilities,
+What types of threats are addressed in Wategaonkar et al. (2024)?,RAG,False,False,1.9116,1.9075,1.5117,"Wategaonkar et al. (2024) address two types of threats: zero-day attacks, which are not publicly known, and multi-step assaults, which consist of several phases, some of which may be harmful and others not (source, page 297).
+
+Sources:
+- El Husseini et al. - 2024 - Advanced Machine Learning Approaches for Zero-Day Attack Detection A Review.pdf (page 1) [pdf]
+- Mbona and Eloff - 2022 - Detecting Zero-Day Intrusion Attacks Using Semi-Supervised Machine Learning Approaches.pdf (page 16) [pdf]
+- Wategaonkar et al. - 2024 - Targeting Insider Threats and Zero-Day Vulnerabilities with Advanced Machine Learning and Behavioral.pdf (page 2) [pdf]",Insider threats and zero-day vulnerabilities,
+What types of threats are addressed in Wategaonkar et al. (2024)?,RAG_MQ,True,False,5.8319,5.8273,2.7544,"Wategaonkar et al. (2024) address two specific types of threats: zero-day attacks and multi-step assaults. Zero-day attacks are those that are not made public and exploit vulnerabilities that have not yet been patched. Multi-step assaults consist of several phases, which may include both harmful and non-harmful actions (source, page).
+
+Sources:
+- El Husseini et al. - 2024 - Advanced Machine Learning Approaches for Zero-Day Attack Detection A Review.pdf (page 1) [pdf]
+- Mbona and Eloff - 2022 - Detecting Zero-Day Intrusion Attacks Using Semi-Supervised Machine Learning Approaches.pdf (page 16) [pdf]
+- Wategaonkar et al. - 2024 - Targeting Insider Threats and Zero-Day Vulnerabilities with Advanced Machine Learning and Behavioral.pdf (page 2) [pdf]
+- Wategaonkar et al. - 2024 - Targeting Insider Threats and Zero-Day Vulnerabilities with Advanced Machine Learning and Behavioral.pdf (page 1) [pdf]",Insider threats and zero-day vulnerabilities,
+What types of threats are addressed in Wategaonkar et al. (2024)?,RAG_HyDE,False,True,4.7084,4.7040,2.4125,"The types of threats addressed in Wategaonkar et al. (2024) include insider threats and zero-day vulnerabilities. The study emphasizes the importance of being ""cyber-ready"" to manage these vulnerabilities and deploy appropriate technologies to identify and prevent cyber-attacks and espionage (source, page 1). Additionally, it discusses malicious traffic, which encompasses unauthorized activities such as Distributed Denial of Service (DDoS) attacks and malware distribution, highlighting the challenges posed by sophisticated techniques used by attackers to evade detection (source, page 1).
+
+Sources:
+- Wategaonkar et al. - 2024 - Targeting Insider Threats and Zero-Day Vulnerabilities with Advanced Machine Learning and Behavioral.pdf (page 1) [pdf]
+- Hu et al. - 2024 - Enhancing Detection of Malicious Traffic Through FPGA-Based Frequency Transformation and Machine Lea.pdf (page 1) [pdf]
+- Wategaonkar et al. - 2024 - Targeting Insider Threats and Zero-Day Vulnerabilities with Advanced Machine Learning and Behavioral.pdf (page 5) [pdf]",Insider threats and zero-day vulnerabilities,
+What types of threats are addressed in Wategaonkar et al. (2024)?,RAG_MQ_HyDE,True,True,14.9718,14.9685,2.3746,"Wategaonkar et al. (2024) address several types of cyber threats, including zero-day attacks and multi-step assaults. Zero-day attacks exploit undisclosed vulnerabilities that lack fixes or detection mechanisms, making conventional security measures ineffective. Multi-step assaults consist of several phases, some of which may be harmful and others not (source, page 2648). Additionally, the study highlights the challenges posed by malicious traffic, such as Distributed Denial of Service (DDoS) attacks and malware distribution, which are significant concerns in the cybersecurity landscape (source, page 2648).
+
+Sources:
+- Hu et al. - 2024 - Enhancing Detection of Malicious Traffic Through FPGA-Based Frequency Transformation and Machine Lea.pdf (page 1) [pdf]
+- Wategaonkar et al. - 2024 - Targeting Insider Threats and Zero-Day Vulnerabilities with Advanced Machine Learning and Behavioral.pdf (page 1) [pdf]
+- Wategaonkar et al. - 2024 - Targeting Insider Threats and Zero-Day Vulnerabilities with Advanced Machine Learning and Behavioral.pdf (page 5) [pdf]
+- El Husseini et al. - 2024 - Advanced Machine Learning Approaches for Zero-Day Attack Detection A Review.pdf (page 1) [pdf]
+- Mbona and Eloff - 2022 - Detecting Zero-Day Intrusion Attacks Using Semi-Supervised Machine Learning Approaches.pdf (page 16) [pdf]
+- Wategaonkar et al. - 2024 - Targeting Insider Threats and Zero-Day Vulnerabilities with Advanced Machine Learning and Behavioral.pdf (page 2) [pdf]",Insider threats and zero-day vulnerabilities,
+What analysis technique is combined with machine learning in Wategaonkar et al. (2024)?,LLM,False,False,1.7677,1.7641,1.7636,"In Wategaonkar et al. (2024), the analysis technique combined with machine learning is **fuzzy logic**. This combination is often used to enhance decision-making processes by incorporating uncertainty and imprecision, which are common in real-world data. If you need more specific details or context about the study, feel free to ask!",Behavioral analysis,
+What analysis technique is combined with machine learning in Wategaonkar et al. (2024)?,RAG,False,False,1.8930,1.8892,1.3087,"The analysis technique combined with machine learning in Wategaonkar et al. (2024) is behavioral analytics. This framework utilizes statistical and pattern recognition approaches to identify patterns that may indicate insider threats (source, page 2658).
+
+Sources:
+- Wategaonkar et al. - 2024 - Targeting Insider Threats and Zero-Day Vulnerabilities with Advanced Machine Learning and Behavioral.pdf (page 3) [pdf]
+- Hu et al. - 2024 - Enhancing Detection of Malicious Traffic Through FPGA-Based Frequency Transformation and Machine Lea.pdf (page 11) [pdf]
+- El Husseini et al. - 2024 - Advanced Machine Learning Approaches for Zero-Day Attack Detection A Review.pdf (page 5) [pdf]",Behavioral analysis,
+What analysis technique is combined with machine learning in Wategaonkar et al. (2024)?,RAG_MQ,True,False,3.7909,3.7868,1.1175,"The analysis technique combined with machine learning in Wategaonkar et al. (2024) is behavioral analytics (source, page 5).
+
+Sources:
+- Wategaonkar et al. - 2024 - Targeting Insider Threats and Zero-Day Vulnerabilities with Advanced Machine Learning and Behavioral.pdf (page 3) [pdf]
+- Hu et al. - 2024 - Enhancing Detection of Malicious Traffic Through FPGA-Based Frequency Transformation and Machine Lea.pdf (page 11) [pdf]
+- El Husseini et al. - 2024 - Advanced Machine Learning Approaches for Zero-Day Attack Detection A Review.pdf (page 5) [pdf]
+- Wategaonkar et al. - 2024 - Targeting Insider Threats and Zero-Day Vulnerabilities with Advanced Machine Learning and Behavioral.pdf (page 5) [pdf]
+- Wategaonkar et al. - 2024 - Targeting Insider Threats and Zero-Day Vulnerabilities with Advanced Machine Learning and Behavioral.pdf (page 4) [pdf]
+- El Husseini et al. - 2024 - Advanced Machine Learning Approaches for Zero-Day Attack Detection A Review.pdf (page 6) [pdf]",Behavioral analysis,
+What analysis technique is combined with machine learning in Wategaonkar et al. (2024)?,RAG_HyDE,False,True,4.0992,4.0944,1.8417,"The analysis technique combined with machine learning in Wategaonkar et al. (2024) is behavioral analytics. This framework utilizes statistical and pattern recognition approaches to identify patterns indicative of insider threats, employing methods such as k-means clustering and Isolation Forest Analysis to enhance the detection of potential security vulnerabilities (source, page/slide/row).
+
+Sources:
+- Wategaonkar et al. - 2024 - Targeting Insider Threats and Zero-Day Vulnerabilities with Advanced Machine Learning and Behavioral.pdf (page 3) [pdf]
+- Wategaonkar et al. - 2024 - Targeting Insider Threats and Zero-Day Vulnerabilities with Advanced Machine Learning and Behavioral.pdf (page 4) [pdf]
+- Hu et al. - 2024 - Enhancing Detection of Malicious Traffic Through FPGA-Based Frequency Transformation and Machine Lea.pdf (page 2) [pdf]",Behavioral analysis,
+What analysis technique is combined with machine learning in Wategaonkar et al. (2024)?,RAG_MQ_HyDE,True,True,9.5755,9.5721,1.4647,"The analysis technique combined with machine learning in Wategaonkar et al. (2024) is behavioral analytics. This integration aims to build a comprehensive threat detection framework by utilizing statistical and pattern recognition approaches alongside machine learning methods (source, page).
+
+Sources:
+- Wategaonkar et al. - 2024 - Targeting Insider Threats and Zero-Day Vulnerabilities with Advanced Machine Learning and Behavioral.pdf (page 3) [pdf]
+- Wategaonkar et al. - 2024 - Targeting Insider Threats and Zero-Day Vulnerabilities with Advanced Machine Learning and Behavioral.pdf (page 4) [pdf]
+- Hu et al. - 2024 - Enhancing Detection of Malicious Traffic Through FPGA-Based Frequency Transformation and Machine Lea.pdf (page 2) [pdf]
+- Mbona and Eloff - 2022 - Detecting Zero-Day Intrusion Attacks Using Semi-Supervised Machine Learning Approaches.pdf (page 10) [pdf]
+- El Husseini et al. - 2024 - Advanced Machine Learning Approaches for Zero-Day Attack Detection A Review.pdf (page 2) [pdf]",Behavioral analysis,
+What is the primary impact of the React2Shell vulnerability?,LLM,False,False,3.2649,3.2618,3.2615,"The React2Shell vulnerability primarily impacts applications built with React, specifically those that use the `react-scripts` package. This vulnerability allows an attacker to execute arbitrary shell commands on the server where the vulnerable application is running. 
+
+The main consequences of this vulnerability include:
+
+1. **Remote Code Execution (RCE)**: Attackers can run malicious commands on the server, potentially leading to full system compromise.
+
+2. **Data Breach**: Sensitive data stored on the server could be accessed or exfiltrated by an attacker.
+
+3. **Service Disruption**: The attacker could disrupt the normal operation of the application, leading to downtime or degraded performance.
+
+4. **Further Exploitation**: Once an attacker gains access to the server, they may use it as a foothold to launch further attacks on other systems within the network.
+
+To mitigate the risks associated with the React2Shell vulnerability, it is crucial for developers to update their dependencies, follow security best practices, and regularly audit their code for vulnerabilities.",Remote code execution,
+What is the primary impact of the React2Shell vulnerability?,RAG,False,False,2.2740,2.2696,1.8905,"The primary impact of the React2Shell vulnerability (CVE-2025-55182) is that it affects over 2.15 million sites, allowing for unauthenticated remote code execution. This critical security vulnerability has prompted urgent recommendations for immediate patching to protect affected applications (source, page/slide/row). Additionally, it has been actively exploited by threat groups, particularly those linked to China, targeting high-value cloud workloads (source, page/slide/row).
+
+Sources:
+- React2Shell-RCE.jpg [image]
+- Next.js & React vulnerability will break the internet.mp4 [video]
+- G7Ym6GOa0AAv1n3.jpg [image]",Remote code execution,
+What is the primary impact of the React2Shell vulnerability?,RAG_MQ,True,False,5.9971,5.9932,2.4567,"The primary impact of the React2Shell vulnerability (CVE-2025-55182) is that it allows unauthenticated remote code execution (RCE), affecting over 2.15 million sites. This vulnerability enables attackers to gain shell access, potentially leading to data theft, resource hijacking, and other malicious activities (source, page/slide/row).
+
+Sources:
+- React2Shell-RCE.jpg [image]
+- Next.js & React vulnerability will break the internet.mp4 [video]
+- G7Ym6GOa0AAv1n3.jpg [image]",Remote code execution,
+What is the primary impact of the React2Shell vulnerability?,RAG_HyDE,False,True,6.0392,6.0338,2.7548,"The primary impact of the React2Shell vulnerability is unauthenticated remote code execution, which allows attackers to execute arbitrary code on affected systems without needing authentication. This vulnerability is particularly severe, as indicated by its CVSS score of 10.0, the highest possible rating, highlighting the critical nature of the threat (source, page/slide/row). The flaw is present in specific versions of React server components, and it has been actively exploited by threat groups, posing significant risks to internet-facing applications (source, page/slide/row).
+
+Sources:
+- Next.js & React vulnerability will break the internet.mp4 [video]
+- G7Ym6GOa0AAv1n3.jpg [image]",Remote code execution,
+What is the primary impact of the React2Shell vulnerability?,RAG_MQ_HyDE,True,True,12.4131,12.4071,3.1720,"The primary impact of the React2Shell vulnerability (CVE-2025-55182) is unauthenticated remote code execution (RCE), which allows attackers to execute arbitrary code on affected systems. This vulnerability is particularly severe as it can lead to shell access (root) for the attacker, data theft (including secrets and credentials), and resource hijacking (such as cryptomining) (source, page/slide/row). The vulnerability affects multiple versions of React and Next.js, and it is recommended that users upgrade their software immediately to mitigate the risk (source, page/slide/row).
+
+Sources:
+- Next.js & React vulnerability will break the internet.mp4 [video]
+- G7Ym6GOa0AAv1n3.jpg [image]
+- React2Shell-RCE.jpg [image]",Remote code execution,
+Which JavaScript frameworks are affected by the React2Shell vulnerability?,LLM,False,False,4.3724,4.3666,4.3656,"The React2Shell vulnerability primarily affects applications built with React, particularly those that use the `react-dom` package. This vulnerability allows for remote code execution due to improper handling of user input in certain scenarios.
+
+While React itself is the main framework affected, any JavaScript framework or library that integrates with React or uses React components could potentially be impacted if they rely on vulnerable versions of React or `react-dom`. This includes frameworks and libraries that build on top of React, such as:
+
+1. **Next.js** - A popular framework for server-rendered React applications.
+2. **Gatsby** - A static site generator that uses React.
+3. **React Native** - For mobile applications built with React.
+
+It's important to note that the vulnerability is not inherent to these frameworks but rather to the specific versions of React and `react-dom` that are affected. Always ensure that you are using the latest, patched versions of these libraries to mitigate any security risks.
+
+For the most accurate and up-to-date information, always refer to the official security advisories and documentation from the respective frameworks and libraries.",React and Next.js,
+Which JavaScript frameworks are affected by the React2Shell vulnerability?,RAG,False,False,2.3749,2.3697,1.6232,"The JavaScript frameworks affected by the React2Shell vulnerability are Next.js and React. The vulnerability is specifically noted to be present in versions 19.0, 19.1.0, 19.1.1, and 19.2.0 of the software that utilizes React server components (source, page).
+
+Sources:
+- Next.js & React vulnerability will break the internet.mp4 [video]",React and Next.js,
+Which JavaScript frameworks are affected by the React2Shell vulnerability?,RAG_MQ,True,False,5.3413,5.3364,1.7549,"The JavaScript frameworks affected by the React2Shell vulnerability are Next.js and React. The vulnerability is specifically noted to be present in versions of software using React server components, including Next.js (source, page).
+
+Sources:
+- Next.js & React vulnerability will break the internet.mp4 [video]
+- G7Ym6GOa0AAv1n3.jpg [image]",React and Next.js,
+Which JavaScript frameworks are affected by the React2Shell vulnerability?,RAG_HyDE,False,True,4.0728,4.0675,1.6063,"The JavaScript frameworks affected by the React2Shell vulnerability are Next.js and React. The vulnerability allows for unauthenticated remote code execution and is present in specific versions of these frameworks (source, page/slide/row).
+
+Sources:
+- Next.js & React vulnerability will break the internet.mp4 [video]
+- G7Ym6GOa0AAv1n3.jpg [image]",React and Next.js,
+Which JavaScript frameworks are affected by the React2Shell vulnerability?,RAG_MQ_HyDE,True,True,11.6518,11.6483,1.9117,"The JavaScript frameworks affected by the React2Shell vulnerability are Next.js and React. The vulnerability allows for unauthenticated remote code execution in React server components, and it has been reported that almost 40% of cloud environments contain instances of these frameworks that are vulnerable (source, page/slide/row).
+
+Sources:
+- Next.js & React vulnerability will break the internet.mp4 [video]
+- G7Ym6GOa0AAv1n3.jpg [image]",React and Next.js,
+Why is anomaly-based detection suitable for zero-day attacks?,LLM,False,False,10.4558,10.4511,10.4507,"Anomaly-based detection is particularly suitable for identifying zero-day attacks for several reasons:
+
+1. **Behavioral Analysis**: Zero-day attacks exploit vulnerabilities that are not yet known to security vendors, meaning there are no specific signatures or patterns to detect them. Anomaly-based detection focuses on identifying deviations from normal behavior rather than relying on known signatures. This allows it to detect unusual activities that may indicate a zero-day exploit.
+
+2. **Dynamic Adaptability**: Anomaly-based systems can adapt to changes in the environment and user behavior over time. This adaptability is crucial for detecting new and unknown threats, as zero-day attacks often manifest in ways that differ from established attack patterns.
+
+3. **Comprehensive Coverage**: Since zero-day attacks can target various components of a system (e.g., applications, operating systems, network protocols), anomaly-based detection can monitor a wide range of activities across different layers. This broad coverage increases the likelihood of identifying suspicious behavior that could indicate an attack.
+
+4. **Early Detection**: Anomaly-based detection can identify potential threats early in their lifecycle. By flagging unusual behavior as soon as it occurs, organizations can respond to potential zero-day attacks before they cause significant damage.
+
+5. **Reduced Dependence on Signatures**: Traditional signature-based detection relies on a database of known threats, which is ineffective against zero-day attacks. Anomaly-based detection does not depend on prior knowledge of specific threats, making it more effective in identifying novel attack vectors.
+
+6. **Contextual Awareness**: Many anomaly-based detection systems incorporate contextual information, such as user roles, typical access patterns, and system configurations. This context helps in distinguishing between benign anomalies (e.g., legitimate changes in user behavior) and potentially malicious activities.
+
+7. **Machine Learning and AI Integration**: Many modern anomaly-based detection systems leverage machine learning and artificial intelligence to improve their detection capabilities. These technologies can analyze vast amounts of data to identify subtle patterns and anomalies that may indicate zero-day attacks.
+
+In summary, anomaly-based detection is well-suited for zero-day attacks because it focuses on identifying deviations from normal behavior, adapts to new threats, and does not rely on prior knowledge of specific attack signatures. This makes it a valuable tool in the cybersecurity arsenal for detecting and mitigating unknown threats.",Zero-day attacks deviate from normal behavior,
+Why is anomaly-based detection suitable for zero-day attacks?,RAG,False,False,2.8948,2.8897,2.2578,"Anomaly-based detection is suitable for zero-day attacks because it models normal (benign) network traffic and identifies deviations from this expected behavior as anomalies, which can include zero-day attacks. This approach is particularly effective for detecting such attacks since they exploit undisclosed vulnerabilities that lack unique signatures (source, page/slide/row). However, it is important to note that while anomaly-based methods are appealing for their ability to detect unknown threats, they often suffer from high false-positive and false-negative rates compared to signature-based methods. This is primarily due to the lack of definitive training datasets and the imbalanced nature of network traffic data (source, page/slide/row).
+
+Sources:
+- Mbona and Eloff - 2022 - Detecting Zero-Day Intrusion Attacks Using Semi-Supervised Machine Learning Approaches.pdf (page 3) [pdf]
+- El Husseini et al. - 2024 - Advanced Machine Learning Approaches for Zero-Day Attack Detection A Review.pdf (page 4) [pdf]",Zero-day attacks deviate from normal behavior,
+Why is anomaly-based detection suitable for zero-day attacks?,RAG_MQ,True,False,5.5019,5.4962,2.9613,"Anomaly-based detection is suitable for zero-day attacks because it models normal (benign) network traffic and identifies deviations from this expected behavior as anomalies, which can include zero-day attacks. This approach is particularly effective for detecting such attacks since they exploit undisclosed vulnerabilities that lack unique signatures (source, page). By observing and analyzing network flows, anomaly-based systems can detect unusual patterns that may indicate an ongoing zero-day attack, even in the absence of prior knowledge about the specific threat (source, page). However, it is important to note that while anomaly-based detection is appealing for its ability to identify unknown threats, it often suffers from a high false-positive and false-negative rate compared to signature-based methods, due to challenges such as the lack of definitive training datasets and the imbalanced nature of network traffic data (source, page).
+
+Sources:
+- Mbona and Eloff - 2022 - Detecting Zero-Day Intrusion Attacks Using Semi-Supervised Machine Learning Approaches.pdf (page 3) [pdf]
+- El Husseini et al. - 2024 - Advanced Machine Learning Approaches for Zero-Day Attack Detection A Review.pdf (page 4) [pdf]
+- El Husseini et al. - 2024 - Advanced Machine Learning Approaches for Zero-Day Attack Detection A Review.pdf (page 3) [pdf]",Zero-day attacks deviate from normal behavior,
+Why is anomaly-based detection suitable for zero-day attacks?,RAG_HyDE,False,True,7.0775,7.0722,3.0915,"Anomaly-based detection is suitable for zero-day attacks because it models normal (benign) network traffic and identifies deviations from this expected behavior as anomalies, which can include zero-day attacks (source, page/slide/row). This approach does not rely on predefined signatures of known threats, making it capable of detecting previously unknown vulnerabilities and exploits that characterize zero-day attacks (source, page/slide/row). Additionally, anomaly-based systems typically utilize unsupervised machine learning techniques, allowing them to operate without the need for labeled datasets, which is beneficial since zero-day attacks are, by definition, not previously identified (source, page/slide/row). However, it is important to note that while anomaly-based detection can effectively identify zero-day attacks, it often suffers from higher false-positive and false-negative rates compared to signature-based methods due to the challenges in accurately modeling normal behavior and the imbalanced nature of network traffic data (source, page/slide/row).
+
+Sources:
+- El Husseini et al. - 2024 - Advanced Machine Learning Approaches for Zero-Day Attack Detection A Review.pdf (page 4) [pdf]
+- Mbona and Eloff - 2022 - Detecting Zero-Day Intrusion Attacks Using Semi-Supervised Machine Learning Approaches.pdf (page 3) [pdf]
+- Mbona and Eloff - 2022 - Detecting Zero-Day Intrusion Attacks Using Semi-Supervised Machine Learning Approaches.pdf (page 2) [pdf]",Zero-day attacks deviate from normal behavior,
+Why is anomaly-based detection suitable for zero-day attacks?,RAG_MQ_HyDE,True,True,12.9033,12.8991,2.9805,"Anomaly-based detection is suitable for zero-day attacks because it models normal (benign) network traffic and identifies deviations from this expected behavior as anomalies, which can include zero-day attacks (source, page/slide/row). This approach does not rely on predefined signatures of known threats, making it capable of detecting previously unknown attacks, such as zero-day vulnerabilities (source, page/slide/row). Additionally, anomaly-based systems are generally based on unsupervised machine learning (ML) techniques, allowing them to operate without labeled datasets, which is beneficial since obtaining labeled data can be challenging (source, page/slide/row). However, it is important to note that while anomaly-based detection can effectively identify zero-day attacks, it often suffers from higher false-positive and false-negative rates compared to signature-based methods due to the imbalanced nature of network traffic data (source, page/slide/row).
+
+Sources:
+- Mbona and Eloff - 2022 - Detecting Zero-Day Intrusion Attacks Using Semi-Supervised Machine Learning Approaches.pdf (page 3) [pdf]
+- El Husseini et al. - 2024 - Advanced Machine Learning Approaches for Zero-Day Attack Detection A Review.pdf (page 4) [pdf]
+- Mbona and Eloff - 2022 - Detecting Zero-Day Intrusion Attacks Using Semi-Supervised Machine Learning Approaches.pdf (page 2) [pdf]",Zero-day attacks deviate from normal behavior,
+What exact CVSS score is assigned to the React2Shell vulnerability?,LLM,False,False,2.6816,2.6766,2.6755,"The React2Shell vulnerability has a CVSS score of 9.8, which is classified as Critical. This score reflects the severity of the vulnerability and its potential impact on affected systems. For the most accurate and up-to-date information, it's always best to refer to the official CVE database or security advisories.",Not mentioned in the documents,
+What exact CVSS score is assigned to the React2Shell vulnerability?,RAG,False,False,1.5292,1.5248,1.0575,"I do not know. The provided context does not specify the CVSS score assigned to the React2Shell vulnerability (CVE-2025-55182).
+
+Sources:
+- React2Shell-RCE.jpg [image]
+- G7Ym6GOa0AAv1n3.jpg [image]
+- Next.js & React vulnerability will break the internet.mp4 [video]",Not mentioned in the documents,
+What exact CVSS score is assigned to the React2Shell vulnerability?,RAG_MQ,True,False,3.6538,3.6492,1.0212,"The CVSS score assigned to the React2Shell vulnerability (CVE-2025-55182) is 10.0, which is the highest possible score (source, slide).
+
+Sources:
+- React2Shell-RCE.jpg [image]
+- G7Ym6GOa0AAv1n3.jpg [image]
+- Next.js & React vulnerability will break the internet.mp4 [video]",Not mentioned in the documents,
+What exact CVSS score is assigned to the React2Shell vulnerability?,RAG_HyDE,False,True,3.8881,3.8836,1.3237,"The React2Shell vulnerability is assigned a CVSS score of 10.0, which is the highest possible score (source, page).
+
+Sources:
+- Next.js & React vulnerability will break the internet.mp4 [video]
+- React2Shell-RCE.jpg [image]",Not mentioned in the documents,
+What exact CVSS score is assigned to the React2Shell vulnerability?,RAG_MQ_HyDE,True,True,9.1073,9.1028,1.0459,"The CVSS score assigned to the React2Shell vulnerability is 10.0, which is the highest possible score (source, page).
+
+Sources:
+- Next.js & React vulnerability will break the internet.mp4 [video]
+- React2Shell-RCE.jpg [image]
+- G7Ym6GOa0AAv1n3.jpg [image]",Not mentioned in the documents,
+Which specific line of source code causes the React2Shell vulnerability?,LLM,False,False,3.1176,3.1132,3.1125,"The React2Shell vulnerability is a security issue that arises from improper handling of user input in React applications, particularly when using the `dangerouslySetInnerHTML` property or similar methods that allow for the injection of HTML. However, I cannot provide specific lines of source code from proprietary or sensitive software.
+
+To mitigate such vulnerabilities, it's essential to follow best practices, such as:
+
+1. **Avoid using `dangerouslySetInnerHTML`** unless absolutely necessary.
+2. **Sanitize user input** to prevent the injection of malicious scripts.
+3. **Use libraries** like DOMPurify to clean HTML before rendering it.
+4. **Keep dependencies updated** to ensure you have the latest security patches.
+
+If you are looking for more detailed information about the vulnerability, I recommend checking security advisories or the official React documentation for guidance on secure coding practices.",Not specified in the documents,
+Which specific line of source code causes the React2Shell vulnerability?,RAG,False,False,2.9463,2.9420,2.4683,"I do not know. The provided context does not specify the exact line of source code that causes the React2Shell vulnerability. It only mentions that there is a critical security vulnerability in React related to unauthorized code execution (source, page/slide/row).
+
+Sources:
+- Next.js & React vulnerability will break the internet.mp4 [video]
+- G7Ym6GOa0AAv1n3.jpg [image]",Not specified in the documents,
+Which specific line of source code causes the React2Shell vulnerability?,RAG_MQ,True,False,4.4238,4.4193,1.9797,"I do not know. The provided context does not specify the exact line of source code that causes the React2Shell vulnerability (CVE-2025-55182). It mentions that the vulnerability is related to flaws in React Server Components that allow unauthorized code execution, but it does not detail the specific code responsible for the vulnerability.
+
+Sources:
+- Next.js & React vulnerability will break the internet.mp4 [video]
+- G7Ym6GOa0AAv1n3.jpg [image]
+- React2Shell-RCE.jpg [image]",Not specified in the documents,
+Which specific line of source code causes the React2Shell vulnerability?,RAG_HyDE,False,True,3.9733,3.9683,1.2437,"I do not know. The provided context does not specify the exact line of source code that causes the React2Shell vulnerability.
+
+Sources:
+- Next.js & React vulnerability will break the internet.mp4 [video]
+- G7Ym6GOa0AAv1n3.jpg [image]",Not specified in the documents,
+Which specific line of source code causes the React2Shell vulnerability?,RAG_MQ_HyDE,True,True,10.5559,10.5505,1.0425,"I do not know. The provided context does not specify the exact line of source code that causes the React2Shell vulnerability.
+
+Sources:
+- Next.js & React vulnerability will break the internet.mp4 [video]
+- G7Ym6GOa0AAv1n3.jpg [image]",Not specified in the documents,
+What GPU model was used to train the models in Mbona and Eloff (2022)?,LLM,False,False,1.4615,1.4561,1.4552,"In the paper by Mbona and Eloff (2022), the authors used an NVIDIA GeForce RTX 3090 GPU to train their models.",No GPU usage is mentioned,
+What GPU model was used to train the models in Mbona and Eloff (2022)?,RAG,False,False,3.5267,3.5219,2.7538,"The context provided does not specify the GPU model used to train the models in the work of Mbona and Eloff (2022). It mentions the use of an Intel Core i9-13900K CPU and a Xilinx Alveo U50 accelerator card, but there is no mention of a specific GPU model. Therefore, I do not know the GPU model used.
+
+Sources:
+- Mbona and Eloff - 2022 - Detecting Zero-Day Intrusion Attacks Using Semi-Supervised Machine Learning Approaches.pdf (page 17) [pdf]
+- Hu et al. - 2024 - Enhancing Detection of Malicious Traffic Through FPGA-Based Frequency Transformation and Machine Lea.pdf (page 7) [pdf]",No GPU usage is mentioned,
+What GPU model was used to train the models in Mbona and Eloff (2022)?,RAG_MQ,True,False,6.3721,6.3676,3.9937,"The context does not specify a GPU model used to train the models in the work of Mbona and Eloff (2022). It mentions the use of a Xilinx Alveo U50 accelerator card for hardware implementation, but does not provide details about a GPU model (source, page/slide/row). Therefore, I do not know the specific GPU model used.
+
+Sources:
+- Mbona and Eloff - 2022 - Detecting Zero-Day Intrusion Attacks Using Semi-Supervised Machine Learning Approaches.pdf (page 17) [pdf]
+- Hu et al. - 2024 - Enhancing Detection of Malicious Traffic Through FPGA-Based Frequency Transformation and Machine Lea.pdf (page 7) [pdf]",No GPU usage is mentioned,
+What GPU model was used to train the models in Mbona and Eloff (2022)?,RAG_HyDE,False,True,5.1014,5.0969,1.3146,"The context provided does not specify the GPU model used to train the models in Mbona and Eloff (2022). Therefore, I do not know the answer to that question.
+
+Sources:
+- Hu et al. - 2024 - Enhancing Detection of Malicious Traffic Through FPGA-Based Frequency Transformation and Machine Lea.pdf (page 7) [pdf]
+- El Husseini et al. - 2024 - Advanced Machine Learning Approaches for Zero-Day Attack Detection A Review.pdf (page 6) [pdf]
+- El Husseini et al. - 2024 - Advanced Machine Learning Approaches for Zero-Day Attack Detection A Review.pdf (page 7) [pdf]",No GPU usage is mentioned,
+What GPU model was used to train the models in Mbona and Eloff (2022)?,RAG_MQ_HyDE,True,True,16.5882,16.5831,2.1225,"The context does not specify a GPU model used to train the models in Mbona and Eloff (2022). It mentions the use of a Xilinx Alveo U50 accelerator card for hardware implementation, but does not provide details about any GPU model. Therefore, I do not know the specific GPU model used.
+
+Sources:
+- Hu et al. - 2024 - Enhancing Detection of Malicious Traffic Through FPGA-Based Frequency Transformation and Machine Lea.pdf (page 7) [pdf]
+- Mbona and Eloff - 2022 - Detecting Zero-Day Intrusion Attacks Using Semi-Supervised Machine Learning Approaches.pdf (page 17) [pdf]
+- El Husseini et al. - 2024 - Advanced Machine Learning Approaches for Zero-Day Attack Detection A Review.pdf (page 6) [pdf]
+- Hu et al. - 2024 - Enhancing Detection of Malicious Traffic Through FPGA-Based Frequency Transformation and Machine Lea.pdf (page 9) [pdf]
+- El Husseini et al. - 2024 - Advanced Machine Learning Approaches for Zero-Day Attack Detection A Review.pdf (page 7) [pdf]",No GPU usage is mentioned,
+What was the exact training time in seconds for the OCSVM model?,LLM,False,False,2.6094,2.6051,2.6043,"I'm sorry, but I don't have access to specific training times for models like the One-Class Support Vector Machine (OCSVM) as it can vary widely based on factors such as the dataset size, feature dimensions, hardware used, and implementation details. If you have a specific context or experiment in mind, please provide more details, and I may be able to help you understand how to measure or estimate training time.",Not reported in the documents,
+What was the exact training time in seconds for the OCSVM model?,RAG,False,False,1.6898,1.6852,1.1243,"I do not know. The provided context does not specify the exact training time in seconds for the OCSVM model.
+
+Sources:
+- Mbona and Eloff - 2022 - Detecting Zero-Day Intrusion Attacks Using Semi-Supervised Machine Learning Approaches.pdf (page 10) [pdf]
+- Mbona and Eloff - 2022 - Detecting Zero-Day Intrusion Attacks Using Semi-Supervised Machine Learning Approaches.pdf (page 14) [pdf]",Not reported in the documents,
+What was the exact training time in seconds for the OCSVM model?,RAG_MQ,True,False,4.2210,4.2158,1.1467,"I do not know. The provided context does not specify the exact training time in seconds for the OCSVM model.
+
+Sources:
+- Mbona and Eloff - 2022 - Detecting Zero-Day Intrusion Attacks Using Semi-Supervised Machine Learning Approaches.pdf (page 10) [pdf]
+- Mbona and Eloff - 2022 - Detecting Zero-Day Intrusion Attacks Using Semi-Supervised Machine Learning Approaches.pdf (page 14) [pdf]",Not reported in the documents,
+What was the exact training time in seconds for the OCSVM model?,RAG_HyDE,False,True,3.9764,3.9725,1.1188,"I do not know. The provided context does not specify the exact training time in seconds for the OCSVM model.
+
+Sources:
+- Mbona and Eloff - 2022 - Detecting Zero-Day Intrusion Attacks Using Semi-Supervised Machine Learning Approaches.pdf (page 10) [pdf]
+- Wategaonkar et al. - 2024 - Targeting Insider Threats and Zero-Day Vulnerabilities with Advanced Machine Learning and Behavioral.pdf (page 3) [pdf]",Not reported in the documents,
+What was the exact training time in seconds for the OCSVM model?,RAG_MQ_HyDE,True,True,14.4649,14.4588,1.7184,"I do not know. The provided context does not specify the exact training time in seconds for the OCSVM model.
+
+Sources:
+- Mbona and Eloff - 2022 - Detecting Zero-Day Intrusion Attacks Using Semi-Supervised Machine Learning Approaches.pdf (page 10) [pdf]
+- Wategaonkar et al. - 2024 - Targeting Insider Threats and Zero-Day Vulnerabilities with Advanced Machine Learning and Behavioral.pdf (page 3) [pdf]",Not reported in the documents,
+Which future version of React fully fixes the React2Shell vulnerability?,LLM,False,False,2.7865,2.7816,2.7806,"As of my last knowledge update in October 2023, the React2Shell vulnerability was addressed in React version 18. If you are using an earlier version of React, it is recommended to upgrade to the latest stable version to ensure that you have all the security fixes and improvements. Always check the official React documentation or release notes for the most accurate and up-to-date information regarding vulnerabilities and their fixes.",Not mentioned in the documents,
+Which future version of React fully fixes the React2Shell vulnerability?,RAG,False,False,2.8234,2.8190,2.3811,"The provided context does not specify which future version of React fully fixes the React2Shell vulnerability. It mentions that the vulnerability is present in versions 19.0, 19.1.0, 19.1.1, and 19.2.0, and that it is recommended to upgrade immediately, but it does not indicate the specific version that resolves the issue (source, page/slide/row). Therefore, I do not know the answer to your question.
+
+Sources:
+- Next.js & React vulnerability will break the internet.mp4 [video]",Not mentioned in the documents,
+Which future version of React fully fixes the React2Shell vulnerability?,RAG_MQ,True,False,4.9069,4.9035,2.0957,"The provided context does not specify which future version of React fully fixes the React2Shell vulnerability. It mentions that the vulnerability is present in versions 19.0, 19.1.0, 19.1.1, and 19.2.0, and that it is recommended to upgrade immediately, but it does not indicate the specific version that resolves the issue. Therefore, I do not know the answer to your question.
+
+Sources:
+- Next.js & React vulnerability will break the internet.mp4 [video]
+- G7Ym6GOa0AAv1n3.jpg [image]",Not mentioned in the documents,
+Which future version of React fully fixes the React2Shell vulnerability?,RAG_HyDE,False,True,3.9930,3.9894,1.4179,"The provided context does not specify which future version of React fully fixes the React2Shell vulnerability. Therefore, I do not know the answer to that question.
+
+Sources:
+- Next.js & React vulnerability will break the internet.mp4 [video]",Not mentioned in the documents,
+Which future version of React fully fixes the React2Shell vulnerability?,RAG_MQ_HyDE,True,True,11.7739,11.7693,1.2958,"The provided context does not specify which future version of React fully fixes the React2Shell vulnerability. Therefore, I do not know the answer to that question.
+
+Sources:
+- Next.js & React vulnerability will break the internet.mp4 [video]
+- G7Ym6GOa0AAv1n3.jpg [image]",Not mentioned in the documents,

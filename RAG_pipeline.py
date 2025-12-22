@@ -1,7 +1,8 @@
 import json
 import os
-import base64     
+import base64
 import tempfile
+import time
 from pathlib import Path
 from typing import Dict, List, Optional
 
@@ -629,7 +630,11 @@ def rag_query(
     # Format prompt
     context_text = "\n\n".join(doc.page_content for doc in context_docs)
     prompt = CONFIG["PROMPT_ANSWER"].format(context=context_text, question=question)
+
+    start_time = time.perf_counter()
     response = llm.invoke(prompt)
+    end_time = time.perf_counter()
+    llm_latency = end_time - start_time
 
     # Build a deduped source list for the response with normalized location info
     sources = []
@@ -673,6 +678,7 @@ def rag_query(
     result = {
         "answer": answer_text,
         "sources": sources,
+        "llm_latency": llm_latency,
     }
     if use_multiquery:
         result["queries"] = queries
@@ -685,7 +691,7 @@ def llm_only(
     question: str,
     model: Optional[str] = None,
     temperature: Optional[float] = None,
-) -> str:
+) -> Dict:
     """
     Queries the LLM directly without any retrieval augmentation.
 
@@ -699,7 +705,7 @@ def llm_only(
         temperature (Optional[float]): The generation temperature. Overrides `CONFIG`.
 
     Returns:
-        str: The raw, non-augmented response from the LLM.
+        Dict: A dictionary containing the raw, non-augmented response from the LLM and the latency of the LLM call.
     """
     # Calls the LLM directly without retrieval for hallucination comparison.
     _require_openai_key()
@@ -707,8 +713,14 @@ def llm_only(
         model=model or CONFIG["LLM_MODEL"],
         temperature=CONFIG["LLM_TEMPERATURE"] if temperature is None else temperature,
     )
+
+    start_time = time.perf_counter()
     response = llm.invoke(question)
-    return response.content if hasattr(response, "content") else response
+    end_time = time.perf_counter()
+    llm_latency = end_time - start_time
+    answer = response.content if hasattr(response, "content") else response
+
+    return {"answer": answer, "llm_latency": llm_latency}
 
 
 def get_vector_store_stats() -> Dict[str, int]:

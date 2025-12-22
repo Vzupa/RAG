@@ -240,6 +240,17 @@ for msg in messages:
                         st.markdown(f"**Original Query:** {h['original']}")
                         st.write(h["hyde"])
 
+            # New section for latencies
+            backend_latency = meta.get("backend_latency")
+            llm_latency = meta.get("llm_latency")
+
+            if backend_latency is not None or llm_latency is not None:
+                with st.expander("Performance Metrics"):
+                    if backend_latency is not None:
+                        st.write(f"Backend Processing Time: {backend_latency:.4f} seconds")
+                    if llm_latency is not None:
+                        st.write(f"LLM Response Time: {llm_latency:.4f} seconds")
+
 # --- Chat input ---
 question = st.chat_input("Ask a question")
 
@@ -268,7 +279,11 @@ if question and question.strip():
             messages.append({
                 "role": "assistant",
                 "content": answer,
-                "meta": data if use_rag else {},
+                "meta": {
+                    **(data if use_rag else {}), # Include existing RAG metadata
+                    "backend_latency": data.get("backend_latency"),
+                    "llm_latency": data.get("llm_latency"),
+                },
             })
             save_chat_history(st.session_state.chats)
         else:
